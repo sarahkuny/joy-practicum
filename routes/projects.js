@@ -24,7 +24,10 @@ router.get("/", function (req, res, next) {
 				res.status(404).send({ error: "Resource not found" });
 			}
 		})
-		.catch((err) => res.status(500).send(err));
+		.catch((err) => {
+			console.log(err);
+			res.status(500).send({ Error: err.message });
+		});
 });
 
 /* GET  project by id */
@@ -38,7 +41,10 @@ router.get("/:id", function (req, res, next) {
 				res.status(404).send({ error: "Resource not found" });
 			}
 		})
-		.catch((err) => res.status(500).send(err));
+		.catch((err) => {
+			console.log(err);
+			res.status(500).send({ Error: err.message });
+		});
 });
 
 // POST: create new project
@@ -66,7 +72,26 @@ router.post("/", function (req, res, next) {
 				res.status(404).send({ error: "Resource not found" });
 			}
 		})
-		.catch((err) => res.status(500).send(err));
+		.catch((err) => {
+			console.log(err);
+			res.status(500).send({ Error: err.message });
+		});
 });
 
+// DELETE project
+router.delete("/:id", function (req, res, next) {
+	const { id } = req.params;
+	db(`DELETE FROM projects WHERE project_id=${id}`)
+		.then((results) => {
+			if (results.data.length) {
+				res.send(results.data);
+			} else {
+				res.status(404).send({ error: "Resource not found" });
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).send({ Error: err.message });
+		});
+});
 module.exports = router;
