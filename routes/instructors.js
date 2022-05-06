@@ -11,11 +11,11 @@ router.get("/", (req, res) => {
 });
 
 // ****
-// */api is added to all routes
+// */api/instructors is added to all routes
 // ****
 
-/* GET all projects from the instructors table in db. */
-router.get("/instructors", function (req, res, next) {
+/* GET all instructors from the instructors table in db. */
+router.get("/", function (req, res, next) {
 	db("SELECT * FROM bootcamp_instructors")
 		.then((results) => {
 			if (results.data.length) {
@@ -30,6 +30,7 @@ router.get("/instructors", function (req, res, next) {
 		});
 });
 
+/* GET  instructor by id */
 router.get("/:id", function (req, res, next) {
 	const { id } = req.params;
 	db(`SELECT * FROM bootcamp_instructors WHERE instructor_id=${id}`)

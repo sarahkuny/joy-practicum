@@ -27,9 +27,38 @@ router.get("/", function (req, res, next) {
 		.catch((err) => res.status(500).send(err));
 });
 
+/* GET  project by id */
 router.get("/:id", function (req, res, next) {
 	const { id } = req.params;
 	db(`SELECT * FROM projects WHERE project_id=${id}`)
+		.then((results) => {
+			if (results.data.length) {
+				res.send(results.data);
+			} else {
+				res.status(404).send({ error: "Resource not found" });
+			}
+		})
+		.catch((err) => res.status(500).send(err));
+});
+
+// POST: create new project
+router.post("/", function (req, res, next) {
+	// req.bod IS the projects object.
+	const {
+		project_files,
+		contact_person,
+		business_name,
+		email,
+		phone,
+		created_at,
+		completed,
+		accepted,
+	} = req.body;
+
+	const sql = `INSERT INTO projects (project_files, contact_person,	business_name,email,phone,created_at,completed,	accepted) VALUES ("${project_files}", "${contact_person}", "${business_name}","${email}","${phone}","${created_at}","${completed}",	"${accepted}");`;
+
+	db(sql);
+	db("SELECT * FROM projects")
 		.then((results) => {
 			if (results.data.length) {
 				res.send(results.data);
