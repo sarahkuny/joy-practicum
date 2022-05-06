@@ -15,12 +15,17 @@ router.get("/", (req, res) => {
 // ****
 
 /* GET all projects from the businesses table in db. */
-router.get("/projects", function (req, res, next) {
-	db("SELECT * FROM projects")
+router.get("/students", function (req, res, next) {
+	db("SELECT * FROM bootcamp_students")
 		.then((results) => {
-			if (results.data.length) res.send(results.data);
+			if (results.data.length) {
+				res.send(results.data);
+			}
 		})
-		.catch((err) => res.status(500).send(err));
+		.catch((err) => {
+			console.log(err);
+			res.status(500).send(err);
+		});
 });
 
 module.exports = router;
