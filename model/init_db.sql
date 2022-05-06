@@ -16,8 +16,8 @@ CREATE TABLE `bootcamp_students` (
 	`first_name` VARCHAR(40) NOT NULL,
 	`last_name` VARCHAR(40) NOT NULL,
 	`email` VARCHAR(40) NOT NULL,
-	`project_id` int NOT NULL,
-	`instructor_id` int NOT NULL,
+	`project_id` int  NULL,
+	`instructor_id` int  NULL,
 	PRIMARY KEY (`student_id`)
 );
 
