@@ -3,20 +3,24 @@
 // *these modules/dependencies are necessary to set up the route
 var express = require("express");
 var router = express.Router();
-const bodyParser = require("body-parser");
 const db = require("../model/helper");
-
-// parses json sent from the client
-router.use(bodyParser.json());
 
 // for testing setup in Postman
 router.get("/", (req, res) => {
 	res.send("Welcome to the API");
 });
 
+// ****
+// */api is added to all routes
+// ****
+
 /* GET all projects from the businesses table in db. */
-router.get("/", function (req, res, next) {
-	res.send("respond with a resource");
+router.get("/projects", function (req, res, next) {
+	db("SELECT * FROM businesses")
+		.then((results) => {
+			if (results.data.length) res.send(results.data);
+		})
+		.catch((err) => res.status(500).send(err));
 });
 
 module.exports = router;

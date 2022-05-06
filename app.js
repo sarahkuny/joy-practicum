@@ -17,7 +17,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // *rename to match my router files
-app.use("/", businessesRouter);
+//adding /api to every route
+app.use("/api", businessesRouter);
 // app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler

@@ -1,4 +1,4 @@
-CREATE TABLE `businesses` (
+CREATE TABLE `projects` (
 	`project_id` int NOT NULL AUTO_INCREMENT,
 	`project_files` longblob,
 	`contact_person` varchar(40) NOT NULL,
