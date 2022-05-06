@@ -15,10 +15,9 @@ router.get("/", (req, res) => {
 // ****
 
 /* GET all projects from the businesses table in db. */
-router.get("/students", function (req, res, next) {
-	db("SELECT * FROM bootcamp_students")
+router.get("/instructors", function (req, res, next) {
+	db("SELECT * FROM bootcamp_instructors")
 		.then((results) => {
-			// if the results array comes back not empty, then send the data. otherwise send the not found error. all other errors will be caught in .catch
 			if (results.data.length) {
 				res.send(results.data);
 			} else {
@@ -27,7 +26,7 @@ router.get("/students", function (req, res, next) {
 		})
 		.catch((err) => {
 			console.log(err);
-			res.status(500).send({ Error: err.message });
+			res.status(500).send(err);
 		});
 });
 

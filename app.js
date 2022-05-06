@@ -7,6 +7,7 @@ var logger = require("morgan");
 // *rename to match my router files
 var projectsRouter = require("./routes/projects");
 var studentsRouter = require("./routes/students");
+var instructorsRouter = require("./routes/instructors");
 
 var app = express();
 
@@ -19,7 +20,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // *rename to match my router files
 //adding /api to every route
 app.use("/api", projectsRouter);
-app.use("/students", studentsRouter);
+app.use("/api", studentsRouter);
+app.use("/api", instructorsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
