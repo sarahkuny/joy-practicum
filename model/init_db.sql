@@ -1,11 +1,11 @@
 DROP TABLE if exists business;
  CREATE TABLE `business` (
 	`project_id` int NOT NULL AUTO_INCREMENT,
-	`project_files` longblob NOT NULL,
-	`contact_person` TEXT(40) NOT NULL,
-	`business_name` TEXT NOT NULL,
-	`email` TEXT NOT NULL,
-	`phone` TEXT NOT NULL,
+	`project_files` longblob NULL,
+	`contact_person` VARCHAR(40) NOT NULL,
+	`business_name` VARCHAR(40) NOT NULL,
+	`email` VARCHAR(40) NOT NULL,
+	`phone` VARCHAR(15) NOT NULL,
 	`created_at` DATETIME NOT NULL,
 	PRIMARY KEY (`project_id`)
 );
@@ -13,9 +13,9 @@ DROP TABLE if exists business;
 DROP TABLE if exists bootcamp_students;
 CREATE TABLE `bootcamp_students` (
 	`student_id` int NOT NULL AUTO_INCREMENT,
-	`first_name` TEXT(40) NOT NULL,
-	`last_name` TEXT(40) NOT NULL,
-	`email` TEXT NOT NULL,
+	`first_name` VARCHAR(40) NOT NULL,
+	`last_name` VARCHAR(40) NOT NULL,
+	`email` VARCHAR(40) NOT NULL,
 	`project_id` int NOT NULL,
 	`instructor_id` int NOT NULL,
 	PRIMARY KEY (`student_id`)
@@ -23,10 +23,10 @@ CREATE TABLE `bootcamp_students` (
 
 DROP TABLE if exists bootcamp_instructors;
 CREATE TABLE `bootcamp_instructors` (
-	`instructor_id` int NOT NULL,
-	`first_name` TEXT(40) NOT NULL,
-	`last_name` TEXT(40) NOT NULL,
-	`email` TEXT NOT NULL,
+	`instructor_id` int NOT NULL AUTO_INCREMENT,
+	`first_name` VARCHAR(40) NOT NULL,
+	`last_name` VARCHAR(40) NOT NULL,
+	`email` VARCHAR(40) NOT NULL,
 	PRIMARY KEY (`instructor_id`)
 );
 
