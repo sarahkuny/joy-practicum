@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 // */api is added to all routes
 // ****
 
-/* GET all projects from the businesses table in db. */
+/* GET all projects from the students table in db. */
 router.get("/students", function (req, res, next) {
 	db("SELECT * FROM bootcamp_students")
 		.then((results) => {

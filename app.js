@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // *rename to match my router files
 //adding /api to every route
-app.use("/api", projectsRouter);
+app.use("/api/projects", projectsRouter);
 app.use("/api", studentsRouter);
 app.use("/api", instructorsRouter);
 
