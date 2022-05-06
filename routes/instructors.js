@@ -30,4 +30,17 @@ router.get("/instructors", function (req, res, next) {
 		});
 });
 
+router.get("/:id", function (req, res, next) {
+	const { id } = req.params;
+	db(`SELECT * FROM bootcamp_instructors WHERE instructor_id=${id}`)
+		.then((results) => {
+			if (results.data.length) {
+				res.send(results.data);
+			} else {
+				res.status(404).send({ error: "Resource not found" });
+			}
+		})
+		.catch((err) => res.status(500).send(err));
+});
+
 module.exports = router;

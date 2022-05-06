@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //adding /api to every route
 app.use("/api/projects", projectsRouter);
 app.use("/api", studentsRouter);
-app.use("/api", instructorsRouter);
+app.use("/api/instructors", instructorsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
