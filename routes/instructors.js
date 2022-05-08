@@ -43,4 +43,43 @@ router.get("/:id", async (req, res, next) => {
 	}
 });
 
+// POST: create new instructor
+router.post("/", async (req, res, next) => {
+	const { first_name, last_name, email } = req.body;
+
+	const sql = `INSERT INTO bootcamp_instructors (first_name, last_name, email) VALUES ("${first_name}", "${last_name}","${email}");`;
+
+	try {
+		// initially, results is what's returned from the post request.
+		let results = await db(sql);
+		// update results to be what's returned from getting all elements in table
+		results = await db("SELECT * FROM bootcamp_instructors");
+		if (results.data.length) {
+			res.status(200).send(results.data);
+		} else {
+			res.status(404).send({ error: "Resource not found" });
+		}
+	} catch (err) {
+		res.status(500).send({ Error: err.message });
+	}
+});
+
+// DELETE instructor
+router.delete("/:id", async (req, res, next) => {
+	const { id } = req.params;
+	try {
+		let results = await db(
+			`DELETE FROM bootcamp_instructors WHERE instructor_id=${id};`
+		);
+		results = await db("SELECT * FROM bootcamp_instructors");
+		if (results.data.length) {
+			res.status(200).send(results.data);
+		} else {
+			res.status(404).send({ error: "Resource not found" });
+		}
+	} catch (err) {
+		res.status(500).send({ Error: err.message });
+	}
+});
+
 module.exports = router;
