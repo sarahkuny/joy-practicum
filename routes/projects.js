@@ -77,6 +77,52 @@ router.post("/", async (req, res, next) => {
 	}
 });
 
+// PUT: update project
+router.put("/:id", async (req, res, next) => {
+	const { id } = req.params;
+	const {
+		project_files,
+		contact_person,
+		business_name,
+		email,
+		phone,
+		created_at,
+		completed,
+		accepted,
+	} = req.body;
+
+	try {
+		// find the specific project
+		let results = await db(`SELECT * FROM projects WHERE project_id=${id}`);
+		// if it is found, create and use the sql instructions for updating this item
+		if (results.data.length) {
+			const sql = `UPDATE projects SET 
+			project_files = "${project_files}", 
+			contact_person = "${contact_person}",	
+			business_name = "${business_name}",
+			email = "${email}",
+			phone = "${phone}",
+			created_at = "${created_at}",
+			completed = "${completed}",	accepted = "${accepted}" 
+			WHERE project_id=${id};`;
+
+			// this replaces the specified item
+			await db(sql);
+
+			// now results is updated to be what's returned from fetching the entire table.
+			results = await db("SELECT * FROM projects");
+			if (results.data.length) {
+				res.status(200).send(results.data);
+			} else {
+				res.status(404).send({ error: "Resource not found" });
+			}
+		}
+	} catch (err) {
+		console.log(err);
+		res.status(500).send({ Error: err.message });
+	}
+});
+
 // DELETE project
 router.delete("/:id", async (req, res, next) => {
 	const { id } = req.params;
