@@ -15,40 +15,39 @@ const db = require("../model/helper");
 // ****
 
 /* GET all projects from the projects table in db. */
-router.get("/", function (req, res, next) {
-	db("SELECT * FROM projects")
-		.then((results) => {
-			if (results.data.length) {
-				res.send(results.data);
-			} else {
-				res.status(404).send({ error: "Resource not found" });
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-			res.status(500).send({ Error: err.message });
-		});
+router.get("/", async (req, res, next) => {
+	try {
+		const results = await db("SELECT * FROM projects");
+		if (results.data.length) {
+			res.status(200).send(results.data);
+		} else {
+			res.status(404).send({ error: "Resource not found" });
+		}
+	} catch (err) {
+		res.status(500).send({ Error: err.message });
+	}
 });
 
 /* GET  project by id */
-router.get("/:id", function (req, res, next) {
+router.get("/:id", async (req, res, next) => {
 	const { id } = req.params;
-	db(`SELECT * FROM projects WHERE project_id=${id}`)
-		.then((results) => {
-			if (results.data.length) {
-				res.send(results.data);
-			} else {
-				res.status(404).send({ error: "Resource not found" });
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-			res.status(500).send({ Error: err.message });
-		});
+	try {
+		const results = await db(`SELECT * FROM projects WHERE project_id=${id}`);
+		if (results.data.length) {
+			console.log(results.data);
+			// since i'm expecting only one item, I can access index 0 in the array rather then sending back the entire array
+			res.status(200).send(results.data[0]);
+		} else {
+			res.status(404).send({ error: "Resource not found" });
+		}
+	} catch (err) {
+		console.error(err);
+		res.status(500).send({ Error: err });
+	}
 });
 
 // POST: create new project
-router.post("/", function (req, res, next) {
+router.post("/", async (req, res, next) => {
 	// req.bod IS the projects object.
 	const {
 		project_files,
@@ -63,35 +62,34 @@ router.post("/", function (req, res, next) {
 
 	const sql = `INSERT INTO projects (project_files, contact_person,	business_name,email,phone,created_at,completed,	accepted) VALUES ("${project_files}", "${contact_person}", "${business_name}","${email}","${phone}","${created_at}","${completed}",	"${accepted}");`;
 
-	db(sql);
-	db("SELECT * FROM projects")
-		.then((results) => {
-			if (results.data.length) {
-				res.send(results.data);
-			} else {
-				res.status(404).send({ error: "Resource not found" });
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-			res.status(500).send({ Error: err.message });
-		});
+	try {
+		// initially, results is what's returned from the post request.
+		let results = await db(sql);
+		// update results to be what's returned from getting all elements in table
+		results = await db("SELECT * FROM projects");
+		if (results.data.length) {
+			res.status(200).send(results.data);
+		} else {
+			res.status(404).send({ error: "Resource not found" });
+		}
+	} catch (err) {
+		res.status(500).send({ Error: err.message });
+	}
 });
 
 // DELETE project
-router.delete("/:id", function (req, res, next) {
+router.delete("/:id", async (req, res, next) => {
 	const { id } = req.params;
-	db(`DELETE FROM projects WHERE project_id=${id}`)
-		.then((results) => {
-			if (results.data.length) {
-				res.send(results.data);
-			} else {
-				res.status(404).send({ error: "Resource not found" });
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-			res.status(500).send({ Error: err.message });
-		});
+	try {
+		let results = await db(`DELETE FROM projects WHERE project_id=${id};`);
+		results = await db("SELECT * FROM projects");
+		if (results.data.length) {
+			res.status(200).send(results.data);
+		} else {
+			res.status(404).send({ error: "Resource not found" });
+		}
+	} catch (err) {
+		res.status(500).send({ Error: err.message });
+	}
 });
 module.exports = router;
