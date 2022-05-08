@@ -8,6 +8,7 @@ var logger = require("morgan");
 var projectsRouter = require("./routes/projects");
 var studentsRouter = require("./routes/students");
 var instructorsRouter = require("./routes/instructors");
+const fileUpload = require("express-fileupload");
 
 var app = express();
 
@@ -38,5 +39,15 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.send("error");
 });
+
+//middleware for handling file uploads
+app.use(
+	fileUpload({
+		useTempFiles: true,
+		safeFileNames: true,
+		preserveExtension: true,
+		tempFileDir: `${__dirname}/public/files/temp`,
+	})
+);
 
 module.exports = app;
