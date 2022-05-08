@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // *rename to match my router files
 //adding /api to every route
 app.use("/api/projects", projectsRouter);
-app.use("/api", studentsRouter);
+app.use("/api/students", studentsRouter);
 app.use("/api/instructors", instructorsRouter);
 
 // catch 404 and forward to error handler
