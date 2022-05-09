@@ -1,6 +1,6 @@
 CREATE TABLE `projects` (
 	`project_id` int NOT NULL AUTO_INCREMENT,
-	`project_files` longblob,
+	`project_files` varchar(50),
 	`contact_person` varchar(40) NOT NULL,
 	`business_name` varchar(40) NOT NULL,
 	`email` varchar(40) NOT NULL,
