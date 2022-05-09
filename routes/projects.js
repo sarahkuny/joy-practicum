@@ -4,11 +4,24 @@
 var express = require("express");
 var router = express.Router();
 const db = require("../model/helper");
+// this package allows us to handle FormData (different content type) - both text and files
+const multer = require("multer");
 
-// for testing setup in Postman
-// router.get("/", (req, res) => {
-// 	res.send("Welcome to the API");
-// });
+// for adjusting how files get stored. multer will execute these functions whenever a new file is received
+const storage = multer.diskStorage({
+	// these functions have access to the info about the file in the file object (2nd arg)
+	destination: function (req, file, cb) {
+		// cb takes an error as first argument and the path for storage as second
+		cb(null, "public/files/");
+	},
+	filename: function (req, file, cb) {
+		// this configures the filename in the db. Adding date infront of originalname protects against potentially overwriting files
+		cb(null, Date.now() + "-" + file.originalname);
+	},
+});
+
+// configuring multer. Can add properties for file limits
+const upload = multer({ storage: storage });
 
 // ****
 // */api/projects is added to all routes
@@ -47,10 +60,14 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // POST: create new project
-router.post("/", async (req, res, next) => {
-	// req.bod IS the projects object.
+// initializing multer returns an object that we can use to handle single/multiple files. pass middleware the name attribute of the input
+router.post("/", upload.single("project_files"), async (req, res, next) => {
+	// info about the file uploaded is in req.file, which multer makes available to us.
+	console.log(req.file, req.body);
+
+	const { path } = req.file;
+	// req.bod IS the projects object. project_files is not on req body though. multer also provides the req.body so this didn't break once multer was implemented.
 	const {
-		project_files,
 		contact_person,
 		business_name,
 		email,
@@ -60,7 +77,7 @@ router.post("/", async (req, res, next) => {
 		accepted,
 	} = req.body;
 
-	const sql = `INSERT INTO projects (project_files, contact_person,	business_name,email,phone,created_at,completed,	accepted) VALUES ("${project_files}", "${contact_person}", "${business_name}","${email}","${phone}","${created_at}","${completed}",	"${accepted}");`;
+	const sql = `INSERT INTO projects (project_files, contact_person,	business_name,email,phone,created_at,completed,	accepted) VALUES ("${path}", "${contact_person}", "${business_name}","${email}","${phone}","${created_at}","${completed}",	"${accepted}");`;
 
 	try {
 		// initially, results is what's returned from the post request.
