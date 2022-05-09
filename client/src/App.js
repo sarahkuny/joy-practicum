@@ -33,7 +33,9 @@ function App() {
 		setFormData({ ...formData, project_files: event.target.files[0] });
 	};
 
-	const handleSubmit = () => {};
+	const handleSubmit = (event) => {
+		event.preventDefault();
+	};
 
 	return (
 		<div className="App">

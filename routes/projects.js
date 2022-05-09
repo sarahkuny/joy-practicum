@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 	// these functions have access to the info about the file in the file object (2nd arg)
 	destination: function (req, file, cb) {
 		// cb takes an error as first argument and the path for storage as second
-		cb(null, "public/files/");
+		cb(null, "./public/files/");
 	},
 	filename: function (req, file, cb) {
 		// this configures the filename in the db. Adding date infront of originalname protects against potentially overwriting files
@@ -66,7 +66,10 @@ router.post("/", upload.single("project_files"), async (req, res, next) => {
 	console.log(req.file, req.body);
 
 	const { path } = req.file;
-	const correctedPath = path.replace("\\", "/");
+	// windows file paths  use only backslash, but the forward slash is needed to make the file url accessible. this regular expression will find all back slashes and replace with forward slash in path.
+	// { path: 'public\\files\\1652116880729-testing.png' } { correctedPath: 'public/files/1652116880729-testing.png' }
+	const correctedPath = path.replace(/\\/g, "/");
+	console.log({ path }, { correctedPath });
 	// req.bod IS the projects object. project_files is not on req body though. multer also provides the req.body so this didn't break once multer was implemented.
 	const {
 		contact_person,
