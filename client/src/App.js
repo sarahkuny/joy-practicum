@@ -11,7 +11,8 @@ function App() {
 				</label>
 				<input
 					type="file"
-					id="fileUpload"
+					id="project_files"
+					name="project_files"
 					className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 					multiple
 				/>
