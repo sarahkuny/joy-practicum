@@ -29,12 +29,37 @@ function App() {
 	const handleFileChange = (event) => {
 		// in event.target we have access to a files property for input type file. This is an array of objects with the file or files uploaded. Accessing one file would be at index 0.
 		let project_files = event.target.files[0];
-		console.log(event.target.files);
+		// let path = event.target.value;
+		// console.log(
+		// 	event.target.value,
+		// 	document.getElementById("project_files").files[0]
+		// );
+		console.log(project_files);
 		setFormData({ ...formData, project_files: event.target.files[0] });
 	};
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+		// formdata lets us create a set of key-value pairs to send form data. this will create an empty formdata object.
+		let formData = new FormData();
+		// add key value pairs to formdata obj. the values are taken from state
+		formData.append("project_files", formData.project_files);
+		formData.append("contact_person", formData.contact_person);
+		formData.append("business_name", formData.business_name);
+		formData.append("email", formData.email);
+		formData.append("phone", formData.phone);
+		formData.append("created_at", formData.created_at);
+		formData.append("completed", 0);
+		formData.append("accepted", 0);
+
+		fetch("api/projects/", {
+			method: "POST",
+			headers: { "content-type": "multipart/form-data" },
+			body: formData,
+		})
+			.then((response) => response.json())
+			.then((data) => console.log(data))
+			.catch((error) => console.error(error));
 	};
 
 	return (
@@ -46,7 +71,7 @@ function App() {
 				className=""
 				action="/api/projects"
 				method="POST"
-				enctype="multipart/form-data"
+				encType="multipart/form-data"
 				onSubmit={handleSubmit}
 			>
 				{/* FILE UPLOAD INPUT */}
