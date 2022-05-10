@@ -19,6 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+// needed to make this folder static inorder to access the file in the browser using its name
+app.use("/public/files", express.static("public/files"));
 
 // *rename to match my router files
 //adding /api to every route

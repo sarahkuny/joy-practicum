@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
 	const [formData, setFormData] = useState({
@@ -8,6 +8,18 @@ function App() {
 		email: "",
 		phone: "",
 	});
+
+	const [projects, setProjects] = useState([]);
+
+	useEffect(() => {
+		fetch("/api/projects/")
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				setProjects(data);
+			})
+			.catch((error) => console.error(error));
+	}, []);
 
 	// handling multiple inputs with a single onchange
 	const handleInputChange = (event) => {
@@ -38,7 +50,7 @@ function App() {
 		event.preventDefault();
 		// formdata lets us create a set of key-value pairs to send form data. this will create an empty formdata object.
 		let project = new FormData();
-		// add key value pairs to formdata obj. the values are taken from state
+		// add key value pairs to formdata obj. the values are taken from state. both .set and .append work. .set will overwrite an existing key's value, while append will simply add on to the end
 		project.set("project_files", formData.project_files);
 		project.set("contact_person", formData.contact_person);
 		project.set("business_name", formData.business_name);
@@ -50,6 +62,7 @@ function App() {
 
 		fetch("/api/projects/", {
 			method: "POST",
+			// adding the headers with this content-type breaks the post because it prevents the browser from correctly adding boundaries between entries  https://muffinman.io/blog/uploading-files-using-fetch-multipart-form-data/
 			// headers: {
 			// 	"Content-Type": "multipart/form-data",
 			// },
@@ -136,6 +149,22 @@ function App() {
 					Submit
 				</button>
 			</form>
+
+			{projects.map((project) => {
+				return (
+					<div
+						href="#"
+						className="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+					>
+						<h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+							{project.contact_person} {project.business_name}
+						</h5>
+						<div className="font-normal text-gray-700 dark:text-gray-400">
+							<a href={`http://localhost:5000/${project.project_files}`}></a>
+						</div>
+					</div>
+				);
+			})}
 		</div>
 	);
 }
