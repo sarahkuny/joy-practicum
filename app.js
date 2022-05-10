@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cors = require("cors");
 
 // *rename to match my router files
 var projectsRouter = require("./routes/projects");
@@ -11,6 +12,7 @@ var instructorsRouter = require("./routes/instructors");
 
 var app = express();
 
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

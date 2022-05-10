@@ -52,9 +52,12 @@ function App() {
 		formData.append("completed", 0);
 		formData.append("accepted", 0);
 
-		fetch("api/projects/", {
+		fetch("http://localhost:5000/api/projects/", {
 			method: "POST",
-			headers: { "content-type": "multipart/form-data" },
+			headers: {
+				"content-type": "multipart/form-data",
+				accept: "application/json",
+			},
 			body: formData,
 		})
 			.then((response) => response.json())
@@ -84,7 +87,6 @@ function App() {
 					id="project_files"
 					name="project_files"
 					className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
-					multiple
 				/>
 				{/* ************** */}
 
