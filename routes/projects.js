@@ -71,17 +71,10 @@ router.post("/", upload.single("project_files"), async (req, res, next) => {
 	const correctedPath = path.replace(/\\/g, "/");
 	console.log({ path }, { correctedPath });
 	// req.bod IS the projects object. project_files is not on req body though. multer also provides the req.body so this didn't break once multer was implemented.
-	const {
-		contact_person,
-		business_name,
-		email,
-		phone,
-		created_at,
-		completed,
-		accepted,
-	} = req.body;
+	const { contact_person, business_name, email, phone } = req.body;
 
-	const sql = `INSERT INTO projects (project_files, contact_person,	business_name,email,phone,created_at,completed,	accepted) VALUES ("${correctedPath}", "${contact_person}", "${business_name}","${email}","${phone}","${created_at}","${completed}",	"${accepted}");`;
+	// created_at, completed, accepted will have default values when project is created.
+	const sql = `INSERT INTO projects (project_files, contact_person,	business_name,email,phone,created_at,completed,	accepted) VALUES ("${correctedPath}", "${contact_person}", "${business_name}","${email}","${phone}",now(),0,	0);`;
 
 	try {
 		// initially, results is what's returned from the post request.
