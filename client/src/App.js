@@ -7,9 +7,6 @@ function App() {
 		business_name: "",
 		email: "",
 		phone: "",
-		created_at: "2021-11-11 13:23:44",
-		completed: 0,
-		accepted: 0,
 	});
 
 	// handling multiple inputs with a single onchange
