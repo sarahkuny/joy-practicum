@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 function App() {
 	const [formData, setFormData] = useState({
 		project_files: null,
+		file_name: "",
 		contact_person: "",
 		business_name: "",
 		email: "",
@@ -43,7 +44,11 @@ function App() {
 		// 	document.getElementById("project_files").files[0]
 		// );
 		console.log(event.target.files[0]);
-		setFormData({ ...formData, project_files: event.target.files[0] });
+		setFormData({
+			...formData,
+			project_files: event.target.files[0],
+			file_name: event.target.files[0].name,
+		});
 	};
 
 	const handleSubmit = (event) => {
@@ -52,6 +57,7 @@ function App() {
 		let project = new FormData();
 		// add key value pairs to formdata obj. the values are taken from state. both .set and .append work. .set will overwrite an existing key's value, while append will simply add on to the end
 		project.set("project_files", formData.project_files);
+		project.set("file_name", formData.file_name);
 		project.set("contact_person", formData.contact_person);
 		project.set("business_name", formData.business_name);
 		project.set("email", formData.email);
@@ -161,7 +167,7 @@ function App() {
 						</h5>
 						<div className="font-normal text-gray-700 dark:text-gray-400">
 							<a href={`http://localhost:5000/${project.project_files}`}>
-								{project.project_files}
+								{project.file_name}
 							</a>
 						</div>
 					</div>

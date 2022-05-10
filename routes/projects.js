@@ -65,7 +65,7 @@ router.post("/", upload.single("project_files"), async (req, res, next) => {
 	// info about the file uploaded is in req.file, which multer makes available to us.
 	console.log(req.file, req.body);
 
-	const { path } = req.file;
+	const { filename, path } = req.file;
 	// windows file paths  use only backslash, but the forward slash is needed to make the file url accessible. this regular expression will find all back slashes and replace with forward slash in path.
 	// { path: 'public\\files\\1652116880729-testing.png' } { correctedPath: 'public/files/1652116880729-testing.png' }
 	const correctedPath = path.replace(/\\/g, "/");
@@ -74,7 +74,7 @@ router.post("/", upload.single("project_files"), async (req, res, next) => {
 	const { contact_person, business_name, email, phone } = req.body;
 
 	// created_at, completed, accepted will have default values when project is created.
-	const sql = `INSERT INTO projects (project_files, contact_person,	business_name,email,phone,created_at,completed,	accepted) VALUES ("${correctedPath}", "${contact_person}", "${business_name}","${email}","${phone}",now(),0,	0);`;
+	const sql = `INSERT INTO projects (project_files, file_name, contact_person,	business_name,email,phone,created_at,completed,	accepted) VALUES ("${correctedPath}","${filename}", "${contact_person}", "${business_name}","${email}","${phone}",now(),0,	0);`;
 
 	try {
 		// initially, results is what's returned from the post request.
