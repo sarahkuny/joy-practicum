@@ -4,6 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
+// adding cors stopped frontend from trying to post to localhost3000 where react is running
 
 // *rename to match my router files
 var projectsRouter = require("./routes/projects");

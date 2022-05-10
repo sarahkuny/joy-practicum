@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 function App() {
 	const [formData, setFormData] = useState({
@@ -7,7 +7,7 @@ function App() {
 		business_name: "",
 		email: "",
 		phone: "",
-		created_at: "",
+		created_at: "2021-11-11 13:23:44",
 		completed: 0,
 		accepted: 0,
 	});
@@ -28,37 +28,35 @@ function App() {
 	// this function will update the project_files property in state
 	const handleFileChange = (event) => {
 		// in event.target we have access to a files property for input type file. This is an array of objects with the file or files uploaded. Accessing one file would be at index 0.
-		let project_files = event.target.files[0];
 		// let path = event.target.value;
 		// console.log(
 		// 	event.target.value,
 		// 	document.getElementById("project_files").files[0]
 		// );
-		console.log(project_files);
+		console.log(event.target.files[0]);
 		setFormData({ ...formData, project_files: event.target.files[0] });
 	};
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		// formdata lets us create a set of key-value pairs to send form data. this will create an empty formdata object.
-		let formData = new FormData();
+		let project = new FormData();
 		// add key value pairs to formdata obj. the values are taken from state
-		formData.append("project_files", formData.project_files);
-		formData.append("contact_person", formData.contact_person);
-		formData.append("business_name", formData.business_name);
-		formData.append("email", formData.email);
-		formData.append("phone", formData.phone);
-		formData.append("created_at", formData.created_at);
-		formData.append("completed", 0);
-		formData.append("accepted", 0);
+		project.set("project_files", formData.project_files);
+		project.set("contact_person", formData.contact_person);
+		project.set("business_name", formData.business_name);
+		project.set("email", formData.email);
+		project.set("phone", formData.phone);
+		project.set("created_at", formData.created_at);
+		project.set("completed", 0);
+		project.set("accepted", 0);
 
-		fetch("http://localhost:5000/api/projects/", {
+		fetch("/api/projects/", {
 			method: "POST",
-			headers: {
-				"content-type": "multipart/form-data",
-				accept: "application/json",
-			},
-			body: formData,
+			// headers: {
+			// 	"Content-Type": "multipart/form-data",
+			// },
+			body: project,
 		})
 			.then((response) => response.json())
 			.then((data) => console.log(data))
