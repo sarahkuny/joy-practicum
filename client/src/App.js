@@ -160,7 +160,9 @@ function App() {
 							{project.contact_person} {project.business_name}
 						</h5>
 						<div className="font-normal text-gray-700 dark:text-gray-400">
-							<a href={`http://localhost:5000/${project.project_files}`}></a>
+							<a href={`http://localhost:5000/${project.project_files}`}>
+								{project.project_files}
+							</a>
 						</div>
 					</div>
 				);
