@@ -12,12 +12,24 @@ function App() {
 
 	const [projects, setProjects] = useState([]);
 
+	const [students, setStudents] = useState([]);
+
 	useEffect(() => {
 		fetch("/api/projects/")
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
 				setProjects(data);
+			})
+			.catch((error) => console.error(error));
+	}, []);
+
+	useEffect(() => {
+		fetch("/api/students/")
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				setStudents(data);
 			})
 			.catch((error) => console.error(error));
 	}, []);
@@ -73,6 +85,28 @@ function App() {
 			// 	"Content-Type": "multipart/form-data",
 			// },
 			body: project,
+		})
+			.then((response) => response.json())
+			.then((data) => console.log(data))
+			.catch((error) => console.error(error));
+	};
+
+	const handleAssignProject = (event, project) => {
+		// since the select element is outside of the map that fetches student list, I don't have access to the student object from the map. but i have access to event.target.selectedindex which I can use to find the student in the students state. Get the id from that obj
+		const id = students[event.target.selectedIndex].student_id;
+		console.log(id);
+		// i have access to project because this function will be used within the map that populates the list of projects.
+		const { project_id } = project;
+
+		fetch(`/api/students/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				project_id: project_id,
+				instructor_id: 1,
+			}),
 		})
 			.then((response) => response.json())
 			.then((data) => console.log(data))
@@ -156,7 +190,7 @@ function App() {
 				</button>
 			</form>
 			<div className="flex gap-5 flex-wrap-reverse">
-				{projects.map((project) => {
+				{projects.map((project, index) => {
 					return (
 						<div
 							key={project.project_id}
@@ -177,6 +211,45 @@ function App() {
 								</a>
 							</div>
 							Assigned to:
+							<select
+								onChange={(event) => {
+									console.log(students[event.target.selectedIndex]);
+									// const id = students[event.target.selectedIndex].student_id;
+									// console.log(id);
+									handleAssignProject(event, project);
+								}}
+							>
+								<option value="Select Student">Select Student</option>
+								{students.map((student) => (
+									<option
+										key={student.student_id}
+										value={`${student.first_name} ${student.last_name}`}
+									>
+										{student.last_name}, {student.first_name}
+									</option>
+								))}
+							</select>
+						</div>
+					);
+				})}
+			</div>
+
+			<div className="flex gap-5 flex-wrap-reverse">
+				{students.map((student) => {
+					return (
+						<div
+							key={student.studentt_id}
+							href="#"
+							className="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100"
+						>
+							<h1 className="text-l font-bold ">Request from:</h1>
+							<h5 className="mb-2 text-l font-bold text-gray-900 ">
+								{student.first_name} {student.last_name}
+							</h5>
+							<span> {student.email}</span>
+							<div className="font-normal text-gray-700">
+								{student.project_id}
+							</div>
 						</div>
 					);
 				})}
