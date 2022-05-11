@@ -11,8 +11,17 @@ function App() {
 	});
 
 	const [projects, setProjects] = useState([]);
+	// created state for the selected student id to be able to access it outside of the map that populates the student list
+	const [selectedStudentId, setSelectedStudentId] = useState(null);
 
 	const [students, setStudents] = useState([]);
+
+	// stores the obj that put is expecting to updat students foreign keys
+	const [assignments, setAssignments] = useState({
+		project_id: null,
+		instructor_id: null,
+	});
+	const [instructors, setInstructors] = useState([]);
 
 	useEffect(() => {
 		fetch("/api/projects/")
@@ -30,6 +39,16 @@ function App() {
 			.then((data) => {
 				console.log(data);
 				setStudents(data);
+			})
+			.catch((error) => console.error(error));
+	}, []);
+
+	useEffect(() => {
+		fetch("/api/instructors/")
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				setInstructors(data);
 			})
 			.catch((error) => console.error(error));
 	}, []);
@@ -91,27 +110,40 @@ function App() {
 			.catch((error) => console.error(error));
 	};
 
-	const handleAssignProject = (event, project) => {
-		// since the select element is outside of the map that fetches student list, I don't have access to the student object from the map. but i have access to event.target.selectedindex which I can use to find the student in the students state. Get the id from that obj
+	const getStudentId = (event) => {
+		// since the select element with onchange is outside of the map that fetches student list, I don't have access to the student object from the map. but i have access to event.target.selectedindex which I can use to find the student in the students state. Get the id from that obj
 		// selectedIndex targets the right student in the array of options elements, but selected index in the students array is off by one. subtracting one  gets the right student.
 		const id = students[event.target.selectedIndex - 1].student_id;
-
+		setSelectedStudentId(id);
+	};
+	console.log(selectedStudentId);
+	// This function assembles the object that PUT is expecting in the backend to fill in foreign keys in students table
+	const buildAssignmentsObject = (event, project) => {
 		// i have access to project because this function will be used within the map that populates the list of projects.
 		const { project_id } = project;
 
-		fetch(`/api/students/${id}`, {
+		const instructor_id =
+			instructors[event.target.selectedIndex - 1].instructor_id;
+
+		// key in state and values in variables above have the same name so syntax is valid
+		setAssignments({ project_id, instructor_id });
+	};
+	console.log(assignments);
+	const handleAssignments = () => {
+		// state value of the selected student. the body is the object that put is expecting stored in state
+		fetch(`/api/students/${selectedStudentId}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({
-				project_id: project_id,
-				instructor_id: 1,
-			}),
+			body: JSON.stringify(assignments),
 		})
 			.then((response) => response.json())
 			.then((data) => console.log(data))
 			.catch((error) => console.error(error));
+
+		// after assignments have been made, reset assignments object
+		setAssignments({ project_id: null, instructor_id: null });
 	};
 
 	return (
@@ -186,7 +218,10 @@ function App() {
 					className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 				/>
 
-				<button className="" type="submit">
+				<button
+					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+					type="submit"
+				>
 					Submit
 				</button>
 			</form>
@@ -214,10 +249,7 @@ function App() {
 							Assigned to:
 							<select
 								onChange={(event) => {
-									console.log(students[event.target.selectedIndex - 1]);
-									// const id = students[event.target.selectedIndex].student_id;
-									// console.log(id);
-									handleAssignProject(event, project);
+									getStudentId(event);
 								}}
 							>
 								<option value="Select Student">Select Student</option>
@@ -230,6 +262,28 @@ function App() {
 									</option>
 								))}
 							</select>
+							Supervised by:
+							<select
+								onChange={(event) => {
+									buildAssignmentsObject(event, project);
+								}}
+							>
+								<option value="Select Instructor">Select Instructor</option>
+								{instructors.map((instructor) => (
+									<option
+										key={instructor.instructor_id}
+										value={`${instructor.first_name} ${instructor.last_name}`}
+									>
+										{instructor.last_name}, {instructor.first_name}
+									</option>
+								))}
+							</select>
+							<button
+								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+								onClick={handleAssignments}
+							>
+								Assign
+							</button>
 						</div>
 					);
 				})}
