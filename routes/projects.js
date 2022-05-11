@@ -95,12 +95,6 @@ router.post("/", upload.single("project_files"), async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
 	const { id } = req.params;
 	const {
-		project_files,
-		contact_person,
-		business_name,
-		email,
-		phone,
-		created_at,
 		completed,
 		accepted,
 	} = req.body;
@@ -111,13 +105,8 @@ router.put("/:id", async (req, res, next) => {
 		// if it is found, create and use the sql instructions for updating this item
 		if (results.data.length) {
 			const sql = `UPDATE projects SET 
-			project_files = "${project_files}", 
-			contact_person = "${contact_person}",	
-			business_name = "${business_name}",
-			email = "${email}",
-			phone = "${phone}",
-			created_at = "${created_at}",
-			completed = "${completed}",	accepted = "${accepted}" 
+			completed = "${completed}",
+			accepted = "${accepted}" 
 			WHERE project_id=${id};`;
 
 			// this replaces the specified item

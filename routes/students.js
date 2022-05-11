@@ -63,4 +63,21 @@ router.delete("/:id", async (req, res, next) => {
 	}
 });
 
+// PUT: edit student
+router.put("/:id", async (req, res, next) => {
+	const { id } = req.params;
+	try {
+		let results = await db(
+			`SELECT FROM bootcamp_instructors WHERE student_id=${id};`
+		);
+		results = await db("SELECT * FROM bootcamp_instructors");
+		if (results.data.length) {
+			res.status(200).send(results.data);
+		} else {
+			res.status(404).send({ error: "Resource not found" });
+		}
+	} catch (err) {
+		res.status(500).send({ Error: err.message });
+	}
+});
 module.exports = router;
