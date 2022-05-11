@@ -155,24 +155,32 @@ function App() {
 					Submit
 				</button>
 			</form>
-
-			{projects.map((project) => {
-				return (
-					<div
-						href="#"
-						className="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-					>
-						<h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-							{project.contact_person} {project.business_name}
-						</h5>
-						<div className="font-normal text-gray-700 dark:text-gray-400">
-							<a href={`http://localhost:5000/${project.project_files}`}>
-								{project.file_name}
-							</a>
+			<div className="flex gap-5 flex-wrap-reverse">
+				{projects.map((project) => {
+					return (
+						<div
+							key={project.project_id}
+							href="#"
+							className="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100"
+						>
+							<h1 className="text-l font-bold ">Request from:</h1>
+							<h5 className="mb-2 text-l font-bold text-gray-900 ">
+								{project.contact_person} at {project.business_name}
+							</h5>
+							<span>created at: {project.created_at}</span>
+							<span> {project.phone}</span>
+							<span> {project.email}</span>
+							<div className="font-normal text-gray-700">
+								File:
+								<a href={`http://localhost:5000/${project.project_files}`}>
+									{project.file_name}
+								</a>
+							</div>
+							Assigned to:
 						</div>
-					</div>
-				);
-			})}
+					);
+				})}
+			</div>
 		</div>
 	);
 }
