@@ -93,8 +93,9 @@ function App() {
 
 	const handleAssignProject = (event, project) => {
 		// since the select element is outside of the map that fetches student list, I don't have access to the student object from the map. but i have access to event.target.selectedindex which I can use to find the student in the students state. Get the id from that obj
-		const id = students[event.target.selectedIndex].student_id;
-		console.log(id);
+		// selectedIndex targets the right student in the array of options elements, but selected index in the students array is off by one. subtracting one  gets the right student.
+		const id = students[event.target.selectedIndex - 1].student_id;
+
 		// i have access to project because this function will be used within the map that populates the list of projects.
 		const { project_id } = project;
 
@@ -213,7 +214,7 @@ function App() {
 							Assigned to:
 							<select
 								onChange={(event) => {
-									console.log(students[event.target.selectedIndex]);
+									console.log(students[event.target.selectedIndex - 1]);
 									// const id = students[event.target.selectedIndex].student_id;
 									// console.log(id);
 									handleAssignProject(event, project);
