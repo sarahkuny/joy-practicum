@@ -18,6 +18,7 @@ export default function Instructors({ setSelectedStudentId }) {
 			})
 			.catch((error) => console.error(error));
 	}, []);
+
 	return (
 		<select
 			onChange={(event) => {

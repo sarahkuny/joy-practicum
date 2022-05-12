@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Students from "./Students";
 import Instructors from "./Instructors";
 import classnames from "classnames";
+import Checkbox from "./Checkbox";
 
-export default function Projects({ projects }) {
+export default function Projects({ projects, setProjects }) {
 	// created state for the selected student id to be able to access it outside of the map that populates the student list
 	const [selectedStudentId, setSelectedStudentId] = useState(null);
 	const [instructors, setInstructors] = useState([]);
@@ -53,8 +54,8 @@ export default function Projects({ projects }) {
 						// using classname strings here to conditionally add styling to show status of project
 						className={classnames(
 							"block p-6 border border-red-300 max-w-sm bg-white rounded-lg  shadow-md hover:bg-gray-100",
-							project.isAccepted && "border border-amber-300",
-							project.isCompleted && "border border-green-300"
+							project.accepted === 1 && " border-amber-300",
+							project.completed === 1 && " border-green-300"
 						)}
 					>
 						<h1 className="text-l font-bold ">Request from:</h1>
@@ -71,6 +72,18 @@ export default function Projects({ projects }) {
 								{project.file_name}
 							</a>
 						</div>
+						<Checkbox
+							label={"Accepted"}
+							route={"accepted"}
+							setProjects={setProjects}
+							project={project}
+						/>
+						<Checkbox
+							label={"Completed"}
+							route={"completed"}
+							setProjects={setProjects}
+							project={project}
+						/>
 						accepted: <span> {project.completed}</span>
 						completed: <span> {project.completed}</span>
 						Assigned to:{" "}
