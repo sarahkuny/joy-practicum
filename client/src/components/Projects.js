@@ -1,19 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Students from "./Students";
 import Instructors from "./Instructors";
 import classnames from "classnames";
-import Checkbox from "./Checkbox";
+import Checkboxes from "./Checkboxes";
 
 export default function Projects({ projects, setProjects }) {
+	const [forceUpdate, setForceUpdate] = useState(false);
 	// created state for the selected student id to be able to access it outside of the map that populates the student list
 	const [selectedStudentId, setSelectedStudentId] = useState(null);
 	const [instructors, setInstructors] = useState([]);
+	const [students, setStudents] = useState([]);
 
 	// stores the obj that put is expecting to update students foreign keys
 	const [assignments, setAssignments] = useState({
 		project_id: null,
 		instructor_id: null,
 	});
+
+	useEffect(() => {
+		fetch("/api/students/")
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				setStudents(data);
+			})
+			.catch((error) => console.error(error));
+	}, []);
+
+	useEffect(() => {
+		fetch("/api/instructors/")
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				setInstructors(data);
+			})
+			.catch((error) => console.error(error));
+	}, []);
 
 	// This function assembles the object that PUT is expecting in the backend to fill in foreign keys in students table
 	const buildAssignmentsObject = (event, project) => {
@@ -72,26 +94,21 @@ export default function Projects({ projects, setProjects }) {
 								{project.file_name}
 							</a>
 						</div>
-						<Checkbox
-							label={"Accepted"}
-							route={"accepted"}
+						<Checkboxes
 							setProjects={setProjects}
 							project={project}
-						/>
-						<Checkbox
-							label={"Completed"}
-							route={"completed"}
-							setProjects={setProjects}
-							project={project}
+							setForceUpdate={setForceUpdate}
 						/>
 						accepted: <span> {project.completed}</span>
 						completed: <span> {project.completed}</span>
 						Assigned to:{" "}
-						<Students setSelectedStudentId={setSelectedStudentId} />
+						<Students
+							setSelectedStudentId={setSelectedStudentId}
+							students={students}
+						/>
 						Supervised by:{" "}
 						<Instructors
 							instructors={instructors}
-							setInstructors={setInstructors}
 							buildAssignmentsObject={buildAssignmentsObject}
 							project={project}
 						/>

@@ -1,21 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 export default function Instructors({
 	instructors,
-	setInstructors,
 	buildAssignmentsObject,
 	project,
 }) {
-	useEffect(() => {
-		fetch("/api/instructors/")
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
-				setInstructors(data);
-			})
-			.catch((error) => console.error(error));
-	}, []);
-
 	return (
 		<select
 			onChange={(event) => {

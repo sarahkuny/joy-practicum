@@ -91,20 +91,47 @@ router.post("/", upload.single("project_files"), async (req, res, next) => {
 	}
 });
 
-// PUT: update project
-router.put("/:id", async (req, res, next) => {
+// PUT: update accepted
+router.put("/:id/accepted", async (req, res, next) => {
 	const { id } = req.params;
-	const { completed, accepted } = req.body;
+	const { accepted } = req.body;
+	console.log(accepted);
 
 	try {
 		// find the specific project
 		let results = await db(`SELECT * FROM projects WHERE project_id=${id}`);
 		// if it is found, create and use the sql instructions for updating this item
 		if (results.data.length) {
-			const sql = `UPDATE projects SET 
-			completed = "${completed}",
-			accepted = "${accepted}" 
-			WHERE project_id=${id};`;
+			const sql = `UPDATE projects SET accepted=${accepted} WHERE project_id=${id};`;
+
+			// this replaces the specified item
+			await db(sql);
+
+			// now results is updated to be what's returned from fetching the entire table.
+			results = await db("SELECT * FROM projects");
+			if (results.data.length) {
+				res.status(200).send(results.data);
+			} else {
+				res.status(404).send({ error: "Resource not found" });
+			}
+		}
+	} catch (err) {
+		console.log(err);
+		res.status(500).send({ Error: err.message });
+	}
+});
+
+// PUT: update completed
+router.put("/:id/completed", async (req, res, next) => {
+	const { id } = req.params;
+	const { completed } = req.body;
+
+	try {
+		// find the specific project
+		let results = await db(`SELECT * FROM projects WHERE project_id=${id}`);
+		// if it is found, create and use the sql instructions for updating this item
+		if (results.data.length) {
+			const sql = `UPDATE projects SET completed=${completed}	WHERE project_id=${id};`;
 
 			// this replaces the specified item
 			await db(sql);
