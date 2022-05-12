@@ -21,8 +21,10 @@ function App() {
 		project_id: null,
 		instructor_id: null,
 	});
+
 	const [instructors, setInstructors] = useState([]);
 
+	// this will run on every rerender because no dep array
 	useEffect(() => {
 		fetch("/api/projects/")
 			.then((response) => response.json())
@@ -31,7 +33,7 @@ function App() {
 				setProjects(data);
 			})
 			.catch((error) => console.error(error));
-	}, []);
+	});
 
 	useEffect(() => {
 		fetch("/api/students/")
@@ -116,7 +118,7 @@ function App() {
 		const id = students[event.target.selectedIndex - 1].student_id;
 		setSelectedStudentId(id);
 	};
-	console.log(selectedStudentId);
+
 	// This function assembles the object that PUT is expecting in the backend to fill in foreign keys in students table
 	const buildAssignmentsObject = (event, project) => {
 		// i have access to project because this function will be used within the map that populates the list of projects.
@@ -128,7 +130,7 @@ function App() {
 		// key in state and values in variables above have the same name so syntax is valid
 		setAssignments({ project_id, instructor_id });
 	};
-	console.log(assignments);
+
 	const handleAssignments = () => {
 		// state value of the selected student. the body is the object that put is expecting stored in state
 		fetch(`/api/students/${selectedStudentId}`, {
@@ -226,7 +228,7 @@ function App() {
 				</button>
 			</form>
 			<div className="flex gap-5 flex-wrap-reverse">
-				{projects.map((project, index) => {
+				{projects.map((project) => {
 					return (
 						<div
 							key={project.project_id}
@@ -235,7 +237,8 @@ function App() {
 						>
 							<h1 className="text-l font-bold ">Request from:</h1>
 							<h5 className="mb-2 text-l font-bold text-gray-900 ">
-								{project.contact_person} at {project.business_name}
+								ID:{project.project_id} {project.contact_person} at{" "}
+								{project.business_name}
 							</h5>
 							<span>created at: {project.created_at}</span>
 							<span> {project.phone}</span>
