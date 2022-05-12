@@ -94,10 +94,7 @@ router.post("/", upload.single("project_files"), async (req, res, next) => {
 // PUT: update project
 router.put("/:id", async (req, res, next) => {
 	const { id } = req.params;
-	const {
-		completed,
-		accepted,
-	} = req.body;
+	const { completed, accepted } = req.body;
 
 	try {
 		// find the specific project

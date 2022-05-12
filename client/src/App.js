@@ -233,7 +233,12 @@ function App() {
 						<div
 							key={project.project_id}
 							href="#"
-							className="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100"
+							// using classname strings here to conditionally add styling to show status of project
+							className={classnames(
+								"block p-6 border border-red-200 max-w-sm bg-white rounded-lg  shadow-md hover:bg-gray-100",
+								isAccepted && "border border-amber-200",
+								isCompleted && "border border-green-200"
+							)}
 						>
 							<h1 className="text-l font-bold ">Request from:</h1>
 							<h5 className="mb-2 text-l font-bold text-gray-900 ">
