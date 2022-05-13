@@ -1,8 +1,8 @@
 // need to add names of these routes in app.js
 
 // *these modules/dependencies are necessary to set up the route
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 const db = require("../model/helper");
 // this package allows us to handle FormData (different content type) - both text and files
 const multer = require("multer");

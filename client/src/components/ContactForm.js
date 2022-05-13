@@ -21,7 +21,7 @@ export default function ContactForm() {
 		fetch("/contact", {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json,",
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(senderDetails),
 		})
@@ -32,7 +32,7 @@ export default function ContactForm() {
 
 	return (
 		<div className="p-6">
-			<form onSubmit={handleSendEmail}>
+			<form onSubmit={handleSendEmail} method="POST" action="/contact">
 				<div className="grid grid-cols-2 gap-4">
 					<div className="flex flex-col">
 						<label htmlFor="full_name">Full Name</label>
