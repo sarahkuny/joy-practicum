@@ -15,8 +15,6 @@ export default function Checkboxes({ setProjects, project, setForceUpdate }) {
 			.then((response) => response.json())
 			.then((data) => {
 				setProjects(data);
-				setForceUpdate(true);
-				console.log("done updating");
 			})
 			.catch((error) => console.error(error));
 	};

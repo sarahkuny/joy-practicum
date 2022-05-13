@@ -18,7 +18,7 @@ function App() {
 		<div className="App">
 			<h1 className="text-3xl font-bold underline">PRACTICUM</h1>
 			<ProjectsForm projects={projects} setProjects={setProjects} />
-			<Projects projects={projects} />
+			<Projects projects={projects} setProjects={setProjects} />
 		</div>
 	);
 }

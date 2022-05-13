@@ -5,7 +5,6 @@ import classnames from "classnames";
 import Checkboxes from "./Checkboxes";
 
 export default function Projects({ projects, setProjects }) {
-	const [forceUpdate, setForceUpdate] = useState(false);
 	// created state for the selected student id to be able to access it outside of the map that populates the student list
 	const [selectedStudentId, setSelectedStudentId] = useState(null);
 	const [instructors, setInstructors] = useState([]);
@@ -75,9 +74,9 @@ export default function Projects({ projects, setProjects }) {
 						href="#"
 						// using classname strings here to conditionally add styling to show status of project
 						className={classnames(
-							"block p-6 border border-red-300 max-w-sm bg-white rounded-lg  shadow-md hover:bg-gray-100",
-							project.accepted === 1 && " border-amber-300",
-							project.completed === 1 && " border-green-300"
+							"block p-6 border border-red-300 max-w-sm bg-white rounded-lg  shadow-md hover:bg-red-100",
+							project.accepted === 1 && "hover:bg-amber-100 border-amber-300",
+							project.completed === 1 && "hover:bg-green-100 border-green-300"
 						)}
 					>
 						<h1 className="text-l font-bold ">Request from:</h1>
@@ -94,17 +93,14 @@ export default function Projects({ projects, setProjects }) {
 								{project.file_name}
 							</a>
 						</div>
-						<Checkboxes
-							setProjects={setProjects}
-							project={project}
-							setForceUpdate={setForceUpdate}
-						/>
+						<Checkboxes setProjects={setProjects} project={project} />
 						accepted: <span> {project.completed}</span>
 						completed: <span> {project.completed}</span>
 						Assigned to:{" "}
 						<Students
 							setSelectedStudentId={setSelectedStudentId}
 							students={students}
+							project={project}
 						/>
 						Supervised by:{" "}
 						<Instructors

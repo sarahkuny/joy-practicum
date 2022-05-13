@@ -110,6 +110,7 @@ router.put("/:id/accepted", async (req, res, next) => {
 			// now results is updated to be what's returned from fetching the entire table.
 			results = await db("SELECT * FROM projects");
 			if (results.data.length) {
+				// console.log(results.data);
 				res.status(200).send(results.data);
 			} else {
 				res.status(404).send({ error: "Resource not found" });
