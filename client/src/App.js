@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProjectsForm from "./components/ProjectForm";
 import Projects from "./components/Projects";
+import ContactForm from "./components/ContactForm";
 
 function App() {
 	const [projects, setProjects] = useState([]);
@@ -17,6 +18,7 @@ function App() {
 	return (
 		<div className="App">
 			<h1 className="text-3xl font-bold underline">PRACTICUM</h1>
+			<ContactForm />
 			<ProjectsForm projects={projects} setProjects={setProjects} />
 			<Projects projects={projects} setProjects={setProjects} />
 		</div>
