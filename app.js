@@ -1,17 +1,17 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var cors = require("cors");
-// adding cors stopped frontend from trying to post to localhost3000 where react is running
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cors = require("cors");
 
 // *rename to match my router files
-var projectsRouter = require("./routes/projects");
-var studentsRouter = require("./routes/students");
-var instructorsRouter = require("./routes/instructors");
+const projectsRouter = require("./routes/projects");
+const studentsRouter = require("./routes/students");
+const instructorsRouter = require("./routes/instructors");
+const contactFormRouter = require("./routes/contact_form");
 
-var app = express();
+const app = express();
 
 app.use(cors());
 app.use(logger("dev"));
@@ -27,6 +27,8 @@ app.use("/public/files", express.static("public/files"));
 app.use("/api/projects", projectsRouter);
 app.use("/api/students", studentsRouter);
 app.use("/api/instructors", instructorsRouter);
+
+app.use("/", contactFormRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
