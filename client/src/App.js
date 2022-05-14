@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import ProjectsForm from "./components/ProjectForm";
 import Projects from "./components/Projects";
 import ContactForm from "./components/ContactForm";
+import FilteredList from "./components/FilteredList";
 
 function App() {
 	const [projects, setProjects] = useState([]);
+	const [showList, setShowList] = useState(false);
+
 	useEffect(() => {
 		fetch("/api/projects/")
 			.then((response) => response.json())
@@ -21,6 +24,7 @@ function App() {
 			<ContactForm />
 			<ProjectsForm projects={projects} setProjects={setProjects} />
 			<Projects projects={projects} setProjects={setProjects} />
+			<FilteredList />
 		</div>
 	);
 }

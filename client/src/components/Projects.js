@@ -7,8 +7,8 @@ import Checkboxes from "./Checkboxes";
 export default function Projects({ projects, setProjects }) {
 	// created state for the selected student id to be able to access it outside of the map that populates the student list
 	const [selectedStudentId, setSelectedStudentId] = useState(null);
-	const [instructors, setInstructors] = useState([]);
 	const [students, setStudents] = useState([]);
+	const [instructors, setInstructors] = useState([]);
 
 	// stores the obj that put is expecting to update students foreign keys
 	const [assignments, setAssignments] = useState({
