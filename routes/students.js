@@ -94,4 +94,25 @@ router.put("/:id", async (req, res, next) => {
 		res.status(500).send({ Error: err.message });
 	}
 });
+
+// need to use join because I want to access the names of the instructors not just their id
+router.get("/filter", async (req, res, next) => {
+	const { instructor_id } = req.params;
+
+	const sql = `SELECT bootcamp_students.first_name, bootcamp_students.last_name,  bootcamp_students.project_id, CONCAT(bootcamp_instructors.first_name," ", bootcamp_instructors.last_name) AS instructor_name FROM bootcamp_students INNER JOIN bootcamp_instructors	ON bootcamp_students.instructor_id=bootcamp_instructors.instructor_id;
+	`;
+
+	try {
+		const results = await db(sql);
+		if (results.data.length) {
+			res.status(200).send(results.data);
+		} else {
+			res.status(404).send({ error: "Resource not found" });
+		}
+	} catch (err) {
+		console.log(err);
+		res.status(500).send({ Error: err.message });
+	}
+});
+
 module.exports = router;

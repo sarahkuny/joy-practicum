@@ -23,7 +23,7 @@ export default function Checkboxes({ setProjects, project, setForceUpdate }) {
 		<div>
 			<label
 				htmlFor="checkbox"
-				class="mr-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+				className="mr-2 text-sm font-medium text-gray-900 dark:text-gray-300"
 			>
 				Accepted
 			</label>
@@ -39,7 +39,7 @@ export default function Checkboxes({ setProjects, project, setForceUpdate }) {
 
 			<label
 				htmlFor="checkbox"
-				class="mr-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+				className="mr-2 text-sm font-medium text-gray-900 dark:text-gray-300"
 			>
 				Completed
 			</label>
