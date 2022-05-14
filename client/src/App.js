@@ -48,7 +48,7 @@ function App() {
 			>
 				Show All Assignments
 			</button>
-			<FilteredList filteredList={filteredList} />
+			{showList && <FilteredList filteredList={filteredList} />}
 		</div>
 	);
 }
