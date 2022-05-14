@@ -41,7 +41,7 @@ export default function ContactForm() {
 							type="text"
 							id="full_name"
 							name="full_name"
-							className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
+							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 							required
 						/>
 					</div>
@@ -52,7 +52,7 @@ export default function ContactForm() {
 							type="text"
 							id="organization"
 							name="organization"
-							className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
+							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 							required
 						/>
 					</div>
@@ -63,7 +63,7 @@ export default function ContactForm() {
 							type="email"
 							id="email"
 							name="email"
-							className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
+							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 							required
 						/>
 					</div>
@@ -76,7 +76,7 @@ export default function ContactForm() {
 							type="tel"
 							id="phone"
 							name="phone"
-							className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
+							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 							required
 						/>
 					</div>
@@ -95,7 +95,7 @@ export default function ContactForm() {
 							type="text"
 							id="message"
 							name="message"
-							className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
+							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 							required
 						/>
 					</div>
@@ -103,7 +103,7 @@ export default function ContactForm() {
 				<div className="flex justify-end py-4">
 					<button
 						type="submit"
-						className="bg-blue-700 text-white font-bold py-2 px-4 rounded focus:ring focus:ring-blue-300 hover:bg-blue-500"
+						className="bg-indigo-500 hover:bg-indigo-700 focus:ring focus:ring-indigo-300 ring-offset-2 text-white py-2 px-4 rounded"
 					>
 						Send
 					</button>

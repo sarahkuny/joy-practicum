@@ -68,82 +68,94 @@ export default function ProjectsForm({ projects, setProjects }) {
 	};
 
 	return (
-		<>
-			{/* enctype is essential for fileuploads */}
+		<div className="p-6">
 			<form
-				className=""
 				action="/api/projects"
 				method="POST"
 				encType="multipart/form-data"
 				onSubmit={handleSubmit}
 			>
-				{/* FILE UPLOAD INPUT */}
-				<label htmlFor="fileUpload" className="text-gray-700">
-					Upload your files
-				</label>
-				<input
-					onChange={handleFileChange}
-					type="file"
-					id="project_files"
-					name="project_files"
-					className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
-				/>
-				{/* ************** */}
+				<div className="grid grid-cols-2 gap-4">
+					<div className="flex flex-col">
+						<label htmlFor="contact_person" className="text-gray-700">
+							Full Name
+						</label>
+						<input
+							value={formData.contact_person}
+							onChange={handleInputChange}
+							type="text"
+							id="contact_person"
+							name="contact_person"
+							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
+						/>
+					</div>
 
-				<label htmlFor="contact_person" className="text-gray-700">
-					Full Name
-				</label>
-				<input
-					value={formData.contact_person}
-					onChange={handleInputChange}
-					type="text"
-					id="contact_person"
-					name="contact_person"
-					className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
-				/>
+					<div className="flex flex-col">
+						<label htmlFor="business_name" className="text-gray-700">
+							Name of Business
+						</label>
+						<input
+							value={formData.business_name}
+							onChange={handleInputChange}
+							type="text"
+							id="business_name"
+							name="business_name"
+							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
+						/>
+					</div>
 
-				<label htmlFor="business_name" className="text-gray-700">
-					Name of Business
-				</label>
-				<input
-					value={formData.business_name}
-					onChange={handleInputChange}
-					type="text"
-					id="business_name"
-					name="business_name"
-					className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
-				/>
-				<label htmlFor="email" className="text-gray-700">
-					Email
-				</label>
-				<input
-					value={formData.email}
-					onChange={handleInputChange}
-					type="email"
-					id="email"
-					name="email"
-					className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
-				/>
+					<div className="flex flex-col">
+						<label htmlFor="email" className="text-gray-700">
+							Email
+						</label>
+						<input
+							value={formData.email}
+							onChange={handleInputChange}
+							type="email"
+							id="email"
+							name="email"
+							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
+						/>
+					</div>
 
-				<label htmlFor="phone" className="text-gray-700">
-					Phone Number
-				</label>
-				<input
-					value={formData.phone}
-					onChange={handleInputChange}
-					type="phone"
-					id="phone"
-					name="phone"
-					className=" rounded-lg appearance-none border border-gray-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
-				/>
-
-				<button
-					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-					type="submit"
-				>
-					Submit
-				</button>
+					<div className="flex flex-col">
+						<label htmlFor="phone" className="text-gray-700">
+							Phone Number
+						</label>
+						<input
+							value={formData.phone}
+							onChange={handleInputChange}
+							type="phone"
+							id="phone"
+							name="phone"
+							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
+						/>
+					</div>
+					{/* FILE UPLOAD INPUT */}
+					{/* enctype is essential for fileuploads */}
+					<div className="flex flex-col col-span-2">
+						<label htmlFor="fileUpload" className="text-gray-700">
+							Upload your files
+						</label>
+						<input
+							onChange={handleFileChange}
+							type="file"
+							id="project_files"
+							name="project_files"
+							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
+						/>
+					</div>
+					{/* ************** */}
+				</div>
+				<div className="flex justify-end py-4">
+					<button
+						className="bg-indigo-500 hover:bg-indigo-700 focus:ring focus:ring-indigo-300 ring-offset-2 text-white py-2 px-4 rounded"
+						type="submit"
+					>
+						Submit
+					</button>
+				</div>
 			</form>
-		</>
+		</div>
 	);
 }

@@ -66,7 +66,7 @@ export default function Projects({ projects, setProjects }) {
 	};
 
 	return (
-		<div className="flex gap-5 flex-wrap-reverse">
+		<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 text-indigo-900 p-6">
 			{projects.map((project) => {
 				return (
 					<div
@@ -74,16 +74,16 @@ export default function Projects({ projects, setProjects }) {
 						href="#"
 						// using classname strings here to conditionally add styling to show status of project
 						className={classnames(
-							"block p-6 border border-red-300 max-w-sm bg-white rounded-lg  shadow-md hover:bg-red-100",
+							" p-6 border border-red-300 max-w-sm min-w-full bg-white rounded-lg  shadow-md hover:bg-red-100",
 							project.accepted === 1 && "hover:bg-amber-100 border-amber-300",
 							project.completed === 1 && "hover:bg-green-100 border-green-300"
 						)}
 					>
-						<h1 className="text-l font-bold ">Request from:</h1>
-						<h5 className="mb-2 text-l font-bold text-gray-900 ">
+						<h5 className="text-l">Request from:</h5>
+						<h1 className="mb-2 text-l font-bold text-gray-900 ">
 							ID:{project.project_id} {project.contact_person} at{" "}
 							{project.business_name}
-						</h5>
+						</h1>
 						<span>created at: {project.created_at}</span>
 						<span> {project.phone}</span>
 						<span> {project.email}</span>
@@ -94,8 +94,6 @@ export default function Projects({ projects, setProjects }) {
 							</a>
 						</div>
 						<Checkboxes setProjects={setProjects} project={project} />
-						accepted: <span> {project.completed}</span>
-						completed: <span> {project.completed}</span>
 						Assigned to:{" "}
 						<Students
 							setSelectedStudentId={setSelectedStudentId}
@@ -109,7 +107,7 @@ export default function Projects({ projects, setProjects }) {
 							project={project}
 						/>
 						<button
-							className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+							className="bg-indigo-500 hover:bg-indigo-700 focus:ring focus:ring-indigo-300 ring-offset-2 text-white py-2 px-4 rounded"
 							onClick={handleAssignments}
 						>
 							Assign
