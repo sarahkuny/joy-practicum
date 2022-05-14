@@ -7,6 +7,7 @@ import FilteredList from "./components/FilteredList";
 function App() {
 	const [projects, setProjects] = useState([]);
 	const [showList, setShowList] = useState(false);
+	const [filteredList, setFilteredList] = useState([]);
 
 	useEffect(() => {
 		fetch("/api/projects/")
@@ -22,6 +23,16 @@ function App() {
 		setShowList(!showList);
 	};
 
+	const getFilteredList = () => {
+		fetch("/api/students/filter")
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				setFilteredList(data);
+			})
+			.catch((error) => console.error(error));
+	};
+
 	return (
 		<div className="App">
 			<h1 className="text-3xl font-bold underline">PRACTICUM</h1>
@@ -29,12 +40,15 @@ function App() {
 			<ProjectsForm projects={projects} setProjects={setProjects} />
 			<Projects projects={projects} setProjects={setProjects} />
 			<button
-				onClick={toggleShowList}
+				onClick={() => {
+					toggleShowList();
+					getFilteredList();
+				}}
 				className="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 			>
 				Show All Assignments
 			</button>
-			<FilteredList />
+			<FilteredList filteredList={filteredList} />
 		</div>
 	);
 }
