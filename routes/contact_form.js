@@ -34,9 +34,11 @@ router.post("/contact", (req, res) => {
 		from: full_name,
 		to: "joyawilliams@gmail.com",
 		subject: `Submission from ${full_name} at ${organization}`,
-		text: `Email: ${email} || Phone: ${phone} ${message}`,
+		html: `<p>Email: ${email} || Phone: ${phone}</p> 
+					<p>${message}<p/>`,
 	};
 
+	// function sends the email
 	transporter.sendMail(mail, (error, info) => {
 		if (error) {
 			console.log(info);
