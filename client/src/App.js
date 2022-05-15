@@ -40,7 +40,11 @@ function App() {
 
 			<ContactForm />
 			<ProjectsForm projects={projects} setProjects={setProjects} />
-			<Projects projects={projects} setProjects={setProjects} />
+			<Projects
+				projects={projects}
+				setProjects={setProjects}
+				filteredList={filteredList}
+			/>
 			<button
 				onClick={() => {
 					toggleShowList();

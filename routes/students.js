@@ -99,7 +99,7 @@ router.put("/:id", async (req, res, next) => {
 router.get("/filter", async (req, res, next) => {
 	const { instructor_id } = req.params;
 
-	const sql = `SELECT bootcamp_students.first_name, bootcamp_students.last_name,  bootcamp_students.project_id, CONCAT(bootcamp_instructors.first_name," ", bootcamp_instructors.last_name) AS instructor_name FROM bootcamp_students INNER JOIN bootcamp_instructors	ON bootcamp_students.instructor_id=bootcamp_instructors.instructor_id order by instructor_name;
+	const sql = `SELECT bootcamp_students.student_id, bootcamp_students.first_name, bootcamp_students.last_name,  bootcamp_students.project_id, CONCAT(bootcamp_instructors.first_name," ", bootcamp_instructors.last_name) AS instructor_name FROM bootcamp_students INNER JOIN bootcamp_instructors	ON bootcamp_students.instructor_id=bootcamp_instructors.instructor_id order by instructor_name;
 	`;
 
 	try {

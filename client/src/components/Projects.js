@@ -4,7 +4,7 @@ import Instructors from "./Instructors";
 import classnames from "classnames";
 import Checkboxes from "./Checkboxes";
 
-export default function Projects({ projects, setProjects }) {
+export default function Projects({ projects, setProjects, filteredList }) {
 	// created state for the selected student id to be able to access it outside of the map that populates the student list
 	const [selectedStudentId, setSelectedStudentId] = useState(null);
 	const [students, setStudents] = useState([]);
@@ -16,6 +16,7 @@ export default function Projects({ projects, setProjects }) {
 		instructor_id: null,
 	});
 
+	const [showAssignment, setShowAssignment] = useState(false);
 	useEffect(() => {
 		fetch("/api/students/")
 			.then((response) => response.json())
@@ -65,6 +66,20 @@ export default function Projects({ projects, setProjects }) {
 		setAssignments({ project_id: null, instructor_id: null });
 	};
 
+	const [assigned, setAssigned] = useState({});
+	const getAssignment = (selectedStudentId) => {
+		// find the student selected from the dropdown in the  list with all the assignments.
+		console.log(selectedStudentId);
+		const assignedStudent = filteredList.find(
+			(student) => student.student_id === selectedStudentId
+		);
+
+		// need to set assigned from the filtered list otherwise it disappears on refresh
+		console.log({ assignedStudent });
+		setAssigned({ ...assignedStudent });
+	};
+	console.log(assigned);
+
 	return (
 		<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 text-indigo-900 p-6">
 			{projects.map((project) => {
@@ -94,33 +109,46 @@ export default function Projects({ projects, setProjects }) {
 							</a>
 						</div>
 						<Checkboxes setProjects={setProjects} project={project} />
-						Assigned to:{" "}
-						<Students
-							setSelectedStudentId={setSelectedStudentId}
-							students={students}
-							project={project}
-						/>
-						Supervised by:{" "}
-						<Instructors
-							instructors={instructors}
-							buildAssignmentsObject={buildAssignmentsObject}
-							project={project}
-						/>
-						<button
-							className={classnames(
-								project.accepted === 0 &&
-									"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 ",
-								project.accepted === 1 &&
-									"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded"
+
+						<div>
+							{showAssignment && (
+								<div>
+									Assigned to: {assigned.first_name} {assigned.last_name}
+									Supervised by: {assigned.instructor_name}
+								</div>
 							)}
-							onClick={handleAssignments}
-							disabled={
-								project.accepted === 0 ||
-								(project.accepted === 1 && project.completed === 1)
-							}
-						>
-							Assign
-						</button>
+							Assigned to:{" "}
+							<Students
+								setSelectedStudentId={setSelectedStudentId}
+								students={students}
+								project={project}
+							/>
+							Supervised by:{" "}
+							<Instructors
+								instructors={instructors}
+								buildAssignmentsObject={buildAssignmentsObject}
+								project={project}
+							/>
+							<button
+								className={classnames(
+									project.accepted === 0 &&
+										"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 ",
+									project.accepted === 1 &&
+										"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded"
+								)}
+								onClick={() => {
+									handleAssignments();
+									getAssignment(selectedStudentId);
+									setShowAssignment(true);
+								}}
+								disabled={
+									project.accepted === 0 ||
+									(project.accepted === 1 && project.completed === 1)
+								}
+							>
+								Assign
+							</button>
+						</div>
 					</div>
 				);
 			})}

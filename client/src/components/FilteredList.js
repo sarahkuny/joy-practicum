@@ -13,14 +13,14 @@ export default function FilteredList({ filteredList }) {
 						</tr>
 					</thead>
 					<tbody>
-						{filteredList.map((item) => {
+						{filteredList.map((entry) => {
 							return (
-								<tr key={item.project_id}>
-									<td>{item.instructor_name}</td>
+								<tr key={entry.student_id}>
+									<td>{entry.instructor_name}</td>
 									<td>
-										{item.first_name} {item.last_name}
+										{entry.first_name} {entry.last_name}
 									</td>
-									<td>{item.project_id}</td>
+									<td>{entry.project_id}</td>
 								</tr>
 							);
 						})}
