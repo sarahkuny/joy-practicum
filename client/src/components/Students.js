@@ -13,7 +13,10 @@ export default function Students({ setSelectedStudentId, students, project }) {
 			onChange={(event) => {
 				getStudentId(event);
 			}}
-			disabled={project.accepted === 0}
+			disabled={
+				project.accepted === 0 ||
+				(project.accepted === 1 && project.completed === 1)
+			}
 		>
 			<option value="Select Student">Select Student</option>
 			{students.map((student) => (

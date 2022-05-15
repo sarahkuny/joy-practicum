@@ -107,8 +107,17 @@ export default function Projects({ projects, setProjects }) {
 							project={project}
 						/>
 						<button
-							className="bg-indigo-500 hover:bg-indigo-700 focus:ring focus:ring-indigo-300 ring-offset-2 text-white py-2 px-4 rounded"
+							className={classnames(
+								project.accepted === 0 &&
+									"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 ",
+								project.accepted === 1 &&
+									"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded"
+							)}
 							onClick={handleAssignments}
+							disabled={
+								project.accepted === 0 ||
+								(project.accepted === 1 && project.completed === 1)
+							}
 						>
 							Assign
 						</button>

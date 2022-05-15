@@ -10,7 +10,10 @@ export default function Instructors({
 			onChange={(event) => {
 				buildAssignmentsObject(event, project);
 			}}
-			disabled={project.accepted === 0}
+			disabled={
+				project.accepted === 0 ||
+				(project.accepted === 1 && project.completed === 1)
+			}
 		>
 			<option value="Select Instructor">Select Instructor</option>
 			{instructors.map((instructor) => (

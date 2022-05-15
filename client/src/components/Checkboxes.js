@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Checkboxes({ setProjects, project, setForceUpdate }) {
+export default function Checkboxes({ setProjects, project }) {
 	const handleChange = (event) => {
 		const route = event.target.value;
 
@@ -25,14 +25,14 @@ export default function Checkboxes({ setProjects, project, setForceUpdate }) {
 				htmlFor="checkbox"
 				className="mr-2 text-sm font-medium text-gray-900 dark:text-gray-300"
 			>
-				Accepted
+				Accept
 			</label>
 			<input
 				onChange={(event) => handleChange(event)}
 				value="accepted"
 				type="checkbox"
 				id="checkbox"
-				className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+				className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
 				disabled={project.accepted === 1}
 				defaultChecked={project.accepted === 1}
 			></input>
@@ -48,8 +48,11 @@ export default function Checkboxes({ setProjects, project, setForceUpdate }) {
 				value="completed"
 				type="checkbox"
 				id="checkbox"
-				className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-				disabled={project.accepted === 0 || project.completed === 1}
+				className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
+				disabled={
+					project.accepted === 0 ||
+					(project.accepted === 1 && project.completed === 1)
+				}
 				defaultChecked={project.completed === 1}
 			></input>
 		</div>
