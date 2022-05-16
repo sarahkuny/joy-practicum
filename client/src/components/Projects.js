@@ -8,7 +8,7 @@ import { HiOutlineMail } from "react-icons/hi";
 
 export default function Projects({ projects, setProjects, filteredList }) {
 	// created state for the selected student id to be able to access it outside of the map that populates the student list
-	const [selectedStudentId, setSelectedStudentId] = useState(null);
+	const [selectedStudent, setSelectedStudent] = useState(null);
 	const [students, setStudents] = useState([]);
 	const [instructors, setInstructors] = useState([]);
 
@@ -18,7 +18,6 @@ export default function Projects({ projects, setProjects, filteredList }) {
 		instructor_id: null,
 	});
 
-	const [showAssignment, setShowAssignment] = useState(false);
 	useEffect(() => {
 		fetch("/api/students/")
 			.then((response) => response.json())
@@ -53,7 +52,7 @@ export default function Projects({ projects, setProjects, filteredList }) {
 
 	const handleAssignments = () => {
 		// state value of the selected student. the body is the object that put is expecting stored in state
-		fetch(`/api/students/${selectedStudentId}`, {
+		fetch(`/api/students/${selectedStudent.student_id}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
@@ -68,23 +67,9 @@ export default function Projects({ projects, setProjects, filteredList }) {
 		setAssignments({ project_id: null, instructor_id: null });
 	};
 
-	const [assigned, setAssigned] = useState({});
-	const getAssignment = (selectedStudentId) => {
-		// find the student selected from the dropdown in the  list with all the assignments.
-		console.log(selectedStudentId);
-		const assignedStudent = filteredList.find(
-			(student) => student.student_id === selectedStudentId
-		);
-
-		// need to set assigned from the filtered list otherwise it disappears on refresh
-		console.log({ assignedStudent });
-		setAssigned({ ...assignedStudent });
-	};
-	console.log(assigned);
-
 	return (
-		<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 text-indigo-900 p-6">
-			{projects.map((project) => {
+		<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-indigo-900 p-6">
+			{projects.map((project, index) => {
 				return (
 					<div
 						key={project.project_id}
@@ -95,7 +80,7 @@ export default function Projects({ projects, setProjects, filteredList }) {
 							project.completed === 1 && "hover:bg-green-100 border-green-300"
 						)}
 					>
-						<span className="text-sm text-center"> {project.created_at}</span>
+						<span className="text-sm text-right"> {project.created_at}</span>
 						<h5 className="text-l">Request from:</h5>
 						<h1 className=" text-l font-bold ">
 							ID:{project.project_id} {project.contact_person} at{" "}
@@ -131,39 +116,48 @@ export default function Projects({ projects, setProjects, filteredList }) {
 						</div>
 						<Checkboxes setProjects={setProjects} project={project} />
 
-						<div className="flex flex-col gap-1">
-							Assigned to:{" "}
-							<Students
-								setSelectedStudentId={setSelectedStudentId}
-								students={students}
-								project={project}
-							/>
-							Supervised by:{" "}
-							<Instructors
-								instructors={instructors}
-								buildAssignmentsObject={buildAssignmentsObject}
-								project={project}
-							/>
+						<div>
+							<div className="flex flex-col gap-1">
+								Assigned to:{" "}
+								<Students
+									selectedStudent={selectedStudent}
+									setSelectedStudent={setSelectedStudent}
+									students={students}
+									project={project}
+								/>
+								Supervised by:{" "}
+								<Instructors
+									instructors={instructors}
+									buildAssignmentsObject={buildAssignmentsObject}
+									project={project}
+								/>
+							</div>
+							<button
+								className={classnames(
+									project.accepted === 0 &&
+										"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 mt-auto ",
+									project.accepted === 1 &&
+										"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto "
+								)}
+								onClick={() => {
+									handleAssignments();
+									const updatedProjects = projects.map((project) => {
+										if (project.project_id === projects[index].project_id) {
+											return { ...project, isAssigned: true };
+										}
+										return project;
+									});
+
+									setProjects(updatedProjects);
+								}}
+								disabled={
+									project.accepted === 0 ||
+									(project.accepted === 1 && project.completed === 1)
+								}
+							>
+								Assign
+							</button>
 						</div>
-						<button
-							className={classnames(
-								project.accepted === 0 &&
-									"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 mt-auto ",
-								project.accepted === 1 &&
-									"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto "
-							)}
-							onClick={() => {
-								handleAssignments();
-								getAssignment(selectedStudentId);
-								setShowAssignment(true);
-							}}
-							disabled={
-								project.accepted === 0 ||
-								(project.accepted === 1 && project.completed === 1)
-							}
-						>
-							Assign
-						</button>
 					</div>
 				);
 			})}

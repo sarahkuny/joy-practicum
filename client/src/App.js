@@ -15,7 +15,13 @@ function App() {
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
-				setProjects(data);
+				// in order to be able to set the attributes of individual elements generated from a map, i've added a property to each item return from fetch. State is set to that array of modified objects.
+				const projects = data.map((project) => {
+					project.isAssigned = false;
+					return project;
+				});
+				console.log(projects);
+				setProjects(projects);
 			})
 			.catch((error) => console.error(error));
 	}, []);
@@ -35,11 +41,13 @@ function App() {
 	};
 
 	return (
-		<div className="App flex flex-col ">
+		<div className="App ">
 			<Header />
+			<div className="flex gap-2 flex-col md:flex-row">
+				<ContactForm />
+				<ProjectsForm projects={projects} setProjects={setProjects} />
+			</div>
 
-			<ContactForm />
-			<ProjectsForm projects={projects} setProjects={setProjects} />
 			<Projects
 				projects={projects}
 				setProjects={setProjects}

@@ -31,8 +31,13 @@ export default function ContactForm() {
 	};
 
 	return (
-		<div className="p-6">
-			<form onSubmit={handleSendEmail} method="POST" action="/contact">
+		<div className="p-6 md:w-1/2 ">
+			<form
+				onSubmit={handleSendEmail}
+				method="POST"
+				action="/contact"
+				className=" mx-auto"
+			>
 				<div className="grid grid-cols-2 gap-4">
 					<div className="flex flex-col">
 						<label htmlFor="full_name">Full Name</label>

@@ -68,12 +68,13 @@ export default function ProjectsForm({ projects, setProjects }) {
 	};
 
 	return (
-		<div className="p-6">
+		<div className="p-6 md:w-1/2">
 			<form
 				action="/api/projects"
 				method="POST"
 				encType="multipart/form-data"
 				onSubmit={handleSubmit}
+				className=" mx-auto"
 			>
 				<div className="grid grid-cols-2 gap-4">
 					<div className="flex flex-col">
