@@ -7,6 +7,7 @@ export default function Instructors({
 }) {
 	return (
 		<select
+			className="p-1 w-full text-indigo-900 border border-indigo-300 rounded focus:border-indigo-600 mb-3"
 			onChange={(event) => {
 				buildAssignmentsObject(event, project);
 			}}

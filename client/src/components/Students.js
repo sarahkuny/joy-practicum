@@ -10,6 +10,7 @@ export default function Students({ setSelectedStudentId, students, project }) {
 
 	return (
 		<select
+			className="p-1 w-full text-indigo-900 border border-indigo-300 rounded focus:border-indigo-600"
 			onChange={(event) => {
 				getStudentId(event);
 			}}

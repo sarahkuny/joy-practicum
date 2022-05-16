@@ -20,10 +20,10 @@ export default function Checkboxes({ setProjects, project }) {
 	};
 
 	return (
-		<div>
+		<div className="flex gap-3">
 			<label
 				htmlFor="checkbox"
-				className="mr-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+				className="text-sm font-medium text-indigo-900 "
 			>
 				Accept
 			</label>
@@ -32,14 +32,14 @@ export default function Checkboxes({ setProjects, project }) {
 				value="accepted"
 				type="checkbox"
 				id="checkbox"
-				className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
+				className="w-4 h-4 border border-indigo-300 rounded bg-indigo-50 focus:ring-4 focus:ring-indigo-300 "
 				disabled={project.accepted === 1}
 				defaultChecked={project.accepted === 1}
 			></input>
 
 			<label
 				htmlFor="checkbox"
-				className="mr-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+				className=" text-sm font-medium text-indigo-900 "
 			>
 				Completed
 			</label>

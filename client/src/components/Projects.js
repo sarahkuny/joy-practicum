@@ -3,6 +3,8 @@ import Students from "./Students";
 import Instructors from "./Instructors";
 import classnames from "classnames";
 import Checkboxes from "./Checkboxes";
+import { HiOutlinePhone } from "react-icons/hi";
+import { HiOutlineMail } from "react-icons/hi";
 
 export default function Projects({ projects, setProjects, filteredList }) {
 	// created state for the selected student id to be able to access it outside of the map that populates the student list
@@ -86,23 +88,42 @@ export default function Projects({ projects, setProjects, filteredList }) {
 				return (
 					<div
 						key={project.project_id}
-						href="#"
 						// using classname strings here to conditionally add styling to show status of project
 						className={classnames(
-							" p-6 border border-red-300 max-w-sm min-w-full bg-white rounded-lg  shadow-md hover:bg-red-100",
+							"flex flex-col p-6 border border-red-300  bg-white rounded-lg  shadow-md hover:bg-red-100",
 							project.accepted === 1 && "hover:bg-amber-100 border-amber-300",
 							project.completed === 1 && "hover:bg-green-100 border-green-300"
 						)}
 					>
+						<span className="text-sm text-center"> {project.created_at}</span>
 						<h5 className="text-l">Request from:</h5>
-						<h1 className="mb-2 text-l font-bold text-gray-900 ">
+						<h1 className=" text-l font-bold ">
 							ID:{project.project_id} {project.contact_person} at{" "}
 							{project.business_name}
 						</h1>
-						<span>created at: {project.created_at}</span>
-						<span> {project.phone}</span>
-						<span> {project.email}</span>
-						<div className="font-normal text-gray-700">
+
+						<ul>
+							<li>
+								<div className="flex gap-2 items-center text-sm">
+									<div>
+										<HiOutlinePhone />
+									</div>
+									<span> {project.phone}</span>
+								</div>
+							</li>
+							<li>
+								<div className="flex gap-2 items-center text-sm">
+									<div>
+										<HiOutlineMail />
+									</div>
+									<span> {project.email}</span>
+								</div>
+							</li>
+						</ul>
+
+						<div className="flex gap-2"></div>
+
+						<div className="font-bold my-2">
 							File:
 							<a href={`http://localhost:5000/${project.project_files}`}>
 								{project.file_name}
@@ -110,13 +131,7 @@ export default function Projects({ projects, setProjects, filteredList }) {
 						</div>
 						<Checkboxes setProjects={setProjects} project={project} />
 
-						<div>
-							{showAssignment && (
-								<div>
-									Assigned to: {assigned.first_name} {assigned.last_name}
-									Supervised by: {assigned.instructor_name}
-								</div>
-							)}
+						<div className="flex flex-col gap-1">
 							Assigned to:{" "}
 							<Students
 								setSelectedStudentId={setSelectedStudentId}
@@ -129,26 +144,26 @@ export default function Projects({ projects, setProjects, filteredList }) {
 								buildAssignmentsObject={buildAssignmentsObject}
 								project={project}
 							/>
-							<button
-								className={classnames(
-									project.accepted === 0 &&
-										"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 ",
-									project.accepted === 1 &&
-										"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded"
-								)}
-								onClick={() => {
-									handleAssignments();
-									getAssignment(selectedStudentId);
-									setShowAssignment(true);
-								}}
-								disabled={
-									project.accepted === 0 ||
-									(project.accepted === 1 && project.completed === 1)
-								}
-							>
-								Assign
-							</button>
 						</div>
+						<button
+							className={classnames(
+								project.accepted === 0 &&
+									"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 mt-auto ",
+								project.accepted === 1 &&
+									"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto "
+							)}
+							onClick={() => {
+								handleAssignments();
+								getAssignment(selectedStudentId);
+								setShowAssignment(true);
+							}}
+							disabled={
+								project.accepted === 0 ||
+								(project.accepted === 1 && project.completed === 1)
+							}
+						>
+							Assign
+						</button>
 					</div>
 				);
 			})}
