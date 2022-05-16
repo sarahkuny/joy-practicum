@@ -67,6 +67,21 @@ export default function Projects({ projects, setProjects, filteredList }) {
 		setAssignments({ project_id: null, instructor_id: null });
 	};
 
+	const updateAssignedProperty = (project_id) => {
+		fetch(`/api/projects/${project_id}/assigned`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+
+			body: JSON.stringify({ assigned: "true" }),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				setProjects(data);
+			})
+			.catch((error) => console.error(error));
+	};
 	return (
 		<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-indigo-900 p-6">
 			{projects.map((project, index) => {
@@ -140,15 +155,10 @@ export default function Projects({ projects, setProjects, filteredList }) {
 										"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto "
 								)}
 								onClick={() => {
+									// assigns student to instr and proj
 									handleAssignments();
-									const updatedProjects = projects.map((project) => {
-										if (project.project_id === projects[index].project_id) {
-											return { ...project, assigned: true };
-										}
-										return project;
-									});
-
-									setProjects(updatedProjects);
+									// changes assigned to true in db
+									updateAssignedProperty(project.project_id);
 								}}
 								disabled={
 									project.accepted === 0 ||

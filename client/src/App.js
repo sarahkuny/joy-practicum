@@ -15,13 +15,8 @@ function App() {
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
-				// in order to be able to set the attributes of individual elements generated from a map, i've added a property to each item return from fetch. State is set to that array of modified objects.
-				const projects = data.map((project) => {
-					project.assigned = false;
-					return project;
-				});
-				console.log(projects);
-				setProjects(projects);
+
+				setProjects(data);
 			})
 			.catch((error) => console.error(error));
 	}, []);
