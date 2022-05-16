@@ -143,7 +143,7 @@ export default function Projects({ projects, setProjects, filteredList }) {
 									handleAssignments();
 									const updatedProjects = projects.map((project) => {
 										if (project.project_id === projects[index].project_id) {
-											return { ...project, isAssigned: true };
+											return { ...project, assigned: true };
 										}
 										return project;
 									});

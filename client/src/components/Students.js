@@ -17,7 +17,7 @@ export default function Students({
 
 	return (
 		<div>
-			{project.isAssigned ? (
+			{project.assigned ? (
 				<span>
 					{selectedStudent.first_name} {selectedStudent.last_name}
 				</span>
