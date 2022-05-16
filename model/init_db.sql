@@ -9,6 +9,7 @@ CREATE TABLE `projects` (
 	`created_at` DATETIME NOT NULL,
 	`completed` BOOLEAN NOT NULL,
 	`accepted` BOOLEAN NOT NULL,
+	`assigned` BOOLEAN ,
 	PRIMARY KEY (`project_id`)
 );
 
