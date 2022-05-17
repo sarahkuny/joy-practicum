@@ -6,7 +6,12 @@ import Checkboxes from "./Checkboxes";
 import { HiOutlinePhone } from "react-icons/hi";
 import { HiOutlineMail } from "react-icons/hi";
 
-export default function Projects({ projects, setProjects, filteredList }) {
+export default function Projects({
+	projects,
+	setProjects,
+	getFilteredList,
+	filteredList,
+}) {
 	// created state for the selected student id to be able to access it outside of the map that populates the student list
 	const [selectedStudent, setSelectedStudent] = useState({});
 	const [students, setStudents] = useState([]);
@@ -130,42 +135,44 @@ export default function Projects({ projects, setProjects, filteredList }) {
 						<Checkboxes setProjects={setProjects} project={project} />
 
 						<div>
-							<div className="flex flex-col gap-1">
-								Assigned to:{" "}
+							<div className="flex flex-col">
+								<span className="mt-2">Assigned to: </span>
 								<Students
-									selectedStudent={selectedStudent}
+									filteredList={filteredList}
 									setSelectedStudent={setSelectedStudent}
 									students={students}
 									project={project}
 								/>
-								Supervised by:{" "}
+								<span className="mt-2">Supervised by:</span>
 								<Instructors
+									filteredList={filteredList}
 									instructors={instructors}
 									buildAssignmentsObject={buildAssignmentsObject}
 									project={project}
 								/>
 							</div>
 						</div>
-						<button
-							className={classnames(
-								project.accepted === 0 &&
-									"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 mt-auto ",
-								project.accepted === 1 &&
-									"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto "
-							)}
-							onClick={() => {
-								// assigns student to instr and proj
-								handleAssignments();
-								// changes assigned to true in db
-								updateAssignedProperty(project.project_id);
-							}}
-							disabled={
-								project.accepted === 0 ||
-								(project.accepted === 1 && project.completed === 1)
-							}
-						>
-							Assign
-						</button>
+						{!project.assigned && (
+							<button
+								className={classnames(
+									project.accepted === 0 &&
+										"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 mt-auto ",
+									project.accepted === 1 &&
+										"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto "
+								)}
+								onClick={() => {
+									// assigns student to instr and proj
+									handleAssignments();
+									// changes assigned to true in db
+									updateAssignedProperty(project.project_id);
+									// get the data representing the foreign keys in the students table
+									getFilteredList();
+								}}
+								disabled={project.accepted === 0}
+							>
+								Assign
+							</button>
+						)}
 					</div>
 				);
 			})}

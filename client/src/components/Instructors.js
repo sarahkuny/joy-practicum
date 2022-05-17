@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import FilteredList from "./FilteredList";
 
 export default function Instructors({
+	filteredList,
 	instructors,
 	buildAssignmentsObject,
 	project,
@@ -12,12 +14,20 @@ export default function Instructors({
 
 		setSelectedInstructor(instructor);
 	};
+
+	let supervisingInstructor = "";
+	if (filteredList.length) {
+		supervisingInstructor = filteredList.find(
+			(assignment) => assignment.project_id === project.project_id
+		);
+	}
+
 	return (
 		<div>
 			{/* TERNARY IN RETURN */}
 			{project.assigned ? (
-				<span>
-					{selectedInstructor.first_name} {selectedInstructor.last_name}
+				<span className="font-bold">
+					{supervisingInstructor.instructor_name}
 				</span>
 			) : (
 				<select

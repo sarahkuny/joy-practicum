@@ -50,7 +50,12 @@ function App() {
 			<Header />
 			<div className="flex gap-2 flex-col md:flex-row">
 				<ContactForm />
-				<ProjectsForm projects={projects} setProjects={setProjects} />
+				<ProjectsForm
+					projects={projects}
+					setProjects={setProjects}
+					getFilteredList={getFilteredList}
+					filteredList={filteredList}
+				/>
 			</div>
 
 			<Projects
