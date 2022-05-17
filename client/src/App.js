@@ -25,6 +25,16 @@ function App() {
 		setShowList(!showList);
 	};
 
+	useEffect(() => {
+		fetch("/api/students/filter")
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				setFilteredList(data);
+			})
+			.catch((error) => console.error(error));
+	}, []);
+
 	const getFilteredList = () => {
 		fetch("/api/students/filter")
 			.then((response) => response.json())

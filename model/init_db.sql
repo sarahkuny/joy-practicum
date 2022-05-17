@@ -31,7 +31,7 @@ CREATE TABLE `bootcamp_instructors` (
 	PRIMARY KEY (`instructor_id`)
 );
 
-ALTER TABLE `bootcamp_students` ADD CONSTRAINT `bootcamp_students_fk0` FOREIGN KEY (`project_id`) REFERENCES `business`(`project_id`);
+ALTER TABLE `bootcamp_students` ADD CONSTRAINT `bootcamp_students_fk0` FOREIGN KEY (`project_id`) REFERENCES `projects`(`project_id`);
 
 ALTER TABLE `bootcamp_students` ADD CONSTRAINT `bootcamp_students_fk1` FOREIGN KEY (`instructor_id`) REFERENCES `bootcamp_instructors`(`instructor_id`);
 

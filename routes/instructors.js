@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 			res.status(404).send({ error: "Resource not found" });
 		}
 	} catch (err) {
-		res.status(500).send({ Error: err.message });
+		res.status(500).send({ Error: err });
 	}
 });
 
@@ -60,7 +60,7 @@ router.post("/", async (req, res, next) => {
 			res.status(404).send({ error: "Resource not found" });
 		}
 	} catch (err) {
-		res.status(500).send({ Error: err.message });
+		res.status(500).send({ Error: err });
 	}
 });
 
@@ -78,7 +78,7 @@ router.delete("/:id", async (req, res, next) => {
 			res.status(404).send({ error: "Resource not found" });
 		}
 	} catch (err) {
-		res.status(500).send({ Error: err.message });
+		res.status(500).send({ Error: err });
 	}
 });
 

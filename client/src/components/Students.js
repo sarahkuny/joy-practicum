@@ -13,10 +13,10 @@ export default function Students({
 
 		setSelectedStudent(student);
 	};
-	console.log(selectedStudent);
 
 	return (
 		<div>
+			{/* TERNARY IN RETURN */}
 			{project.assigned ? (
 				<span>
 					{selectedStudent.first_name} {selectedStudent.last_name}

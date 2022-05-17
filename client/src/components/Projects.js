@@ -8,7 +8,7 @@ import { HiOutlineMail } from "react-icons/hi";
 
 export default function Projects({ projects, setProjects, filteredList }) {
 	// created state for the selected student id to be able to access it outside of the map that populates the student list
-	const [selectedStudent, setSelectedStudent] = useState(null);
+	const [selectedStudent, setSelectedStudent] = useState({});
 	const [students, setStudents] = useState([]);
 	const [instructors, setInstructors] = useState([]);
 
@@ -121,8 +121,6 @@ export default function Projects({ projects, setProjects, filteredList }) {
 							</li>
 						</ul>
 
-						<div className="flex gap-2"></div>
-
 						<div className="font-bold my-2">
 							File:
 							<a href={`http://localhost:5000/${project.project_files}`}>
@@ -147,27 +145,27 @@ export default function Projects({ projects, setProjects, filteredList }) {
 									project={project}
 								/>
 							</div>
-							<button
-								className={classnames(
-									project.accepted === 0 &&
-										"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 mt-auto ",
-									project.accepted === 1 &&
-										"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto "
-								)}
-								onClick={() => {
-									// assigns student to instr and proj
-									handleAssignments();
-									// changes assigned to true in db
-									updateAssignedProperty(project.project_id);
-								}}
-								disabled={
-									project.accepted === 0 ||
-									(project.accepted === 1 && project.completed === 1)
-								}
-							>
-								Assign
-							</button>
 						</div>
+						<button
+							className={classnames(
+								project.accepted === 0 &&
+									"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 mt-auto ",
+								project.accepted === 1 &&
+									"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto "
+							)}
+							onClick={() => {
+								// assigns student to instr and proj
+								handleAssignments();
+								// changes assigned to true in db
+								updateAssignedProperty(project.project_id);
+							}}
+							disabled={
+								project.accepted === 0 ||
+								(project.accepted === 1 && project.completed === 1)
+							}
+						>
+							Assign
+						</button>
 					</div>
 				);
 			})}

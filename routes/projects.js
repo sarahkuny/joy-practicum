@@ -37,7 +37,7 @@ router.get("/", async (req, res, next) => {
 			res.status(404).send({ error: "Resource not found" });
 		}
 	} catch (err) {
-		res.status(500).send({ Error: err.message });
+		res.status(500).send({ Error: err });
 	}
 });
 
@@ -87,7 +87,7 @@ router.post("/", upload.single("project_files"), async (req, res, next) => {
 			res.status(404).send({ error: "Resource not found" });
 		}
 	} catch (err) {
-		res.status(500).send({ Error: err.message });
+		res.status(500).send({ Error: err });
 	}
 });
 
@@ -118,7 +118,7 @@ router.put("/:id/accepted", async (req, res, next) => {
 		}
 	} catch (err) {
 		console.log(err);
-		res.status(500).send({ Error: err.message });
+		res.status(500).send({ Error: err });
 	}
 });
 
@@ -147,7 +147,7 @@ router.put("/:id/completed", async (req, res, next) => {
 		}
 	} catch (err) {
 		console.log(err);
-		res.status(500).send({ Error: err.message });
+		res.status(500).send({ Error: err });
 	}
 });
 
@@ -176,7 +176,7 @@ router.put("/:id/assigned", async (req, res, next) => {
 		}
 	} catch (err) {
 		console.log(err);
-		res.status(500).send({ Error: err.message });
+		res.status(500).send({ Error: err });
 	}
 });
 
