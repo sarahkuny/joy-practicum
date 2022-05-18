@@ -7,7 +7,7 @@ export default function Sidebar({ filteredList, getFilteredList }) {
 		setShowList(!showList);
 	};
 	return (
-		<div className="p-6 absolute">
+		<div className="px-3 py-6 absolute ">
 			<button
 				onClick={() => {
 					toggleShowList();

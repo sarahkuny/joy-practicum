@@ -10,7 +10,7 @@ export default function StaffView({
 }) {
 	return (
 		<div className="flex gap-4">
-			<div className="w-1/6 bg-orange-50 rounded-lg">
+			<div className="w-1/6 bg-orange-50 ">
 				<Sidebar
 					filteredList={filteredList}
 					getFilteredList={getFilteredList}
