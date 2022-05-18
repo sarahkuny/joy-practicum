@@ -88,7 +88,7 @@ export default function Projects({
 			.catch((error) => console.error(error));
 	};
 	return (
-		<div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-indigo-900 p-6">
+		<div className="grid sm:grid-cols-2 md:grid-cols-3  gap-4 text-indigo-900 p-6">
 			{projects.map((project, index) => {
 				return (
 					<div

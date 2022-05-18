@@ -4,12 +4,11 @@ import Projects from "./components/Projects";
 import ContactForm from "./components/ContactForm";
 import FilteredList from "./components/FilteredList";
 import Header from "./components/Header";
+import StaffView from "./components/StaffView";
 
 function App() {
 	const [projects, setProjects] = useState([]);
-	const [showList, setShowList] = useState(false);
 	const [filteredList, setFilteredList] = useState([]);
-
 	useEffect(() => {
 		fetch("/api/projects/")
 			.then((response) => response.json())
@@ -21,10 +20,6 @@ function App() {
 			.catch((error) => console.error(error));
 	}, []);
 
-	const toggleShowList = () => {
-		setShowList(!showList);
-	};
-
 	useEffect(() => {
 		fetch("/api/students/filter")
 			.then((response) => response.json())
@@ -35,6 +30,7 @@ function App() {
 			.catch((error) => console.error(error));
 	}, []);
 
+	// gets joined table that represents foreign keys in students table
 	const getFilteredList = () => {
 		fetch("/api/students/filter")
 			.then((response) => response.json())
@@ -57,22 +53,12 @@ function App() {
 					filteredList={filteredList}
 				/>
 			</div>
-
-			<Projects
+			<StaffView
 				projects={projects}
 				setProjects={setProjects}
 				filteredList={filteredList}
+				getFilteredList={getFilteredList}
 			/>
-			<button
-				onClick={() => {
-					toggleShowList();
-					getFilteredList();
-				}}
-				className="block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-			>
-				Show All Assignments
-			</button>
-			{showList && <FilteredList filteredList={filteredList} />}
 		</div>
 	);
 }
