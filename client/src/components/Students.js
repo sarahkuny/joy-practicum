@@ -14,6 +14,11 @@ export default function Students({
 		setSelectedStudent(student);
 	};
 
+	// this creates a list of unassigned students so that the select elements is populated with only students not yet assigned. this prevents the code from breaking in case of accidentally selecting a student already assigned. this would making project.assigned true, but without a student acctually being assigned.
+	const unassignedStudents = students.filter(
+		(student) => student.project_id === null
+	);
+
 	// this solves the problem of persisting the value of the select element without state, which would've required an unknown number of state variables to handle each individual project assignment. Basically, I need to get this assignment from the filtered list which is generated once an assignment has been made. it is the result of the sql join.
 	let assignedStudent = "";
 	// check needed in case there's nothing in filteredlist like when the tables are all freshly generated and no assignments have been made
@@ -42,7 +47,7 @@ export default function Students({
 					}
 				>
 					<option value="Select Student">Select Student</option>
-					{students.map((student) => (
+					{unassignedStudents.map((student) => (
 						<option
 							key={student.student_id}
 							value={`${student.first_name} ${student.last_name}`}

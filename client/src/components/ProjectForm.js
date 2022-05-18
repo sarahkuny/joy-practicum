@@ -65,10 +65,23 @@ export default function ProjectsForm({ projects, setProjects }) {
 			.then((response) => response.json())
 			.then((data) => setProjects(data))
 			.catch((error) => console.error(error));
+
+		setFormData({
+			project_files: null,
+			file_name: "",
+			contact_person: "",
+			business_name: "",
+			email: "",
+			phone: "",
+		});
 	};
 
 	return (
 		<div className="p-6 md:w-1/2">
+			<p className="text-2xl pb-6 text-indigo-900">
+				Ready to submit? Fill in your details and upload a ZIP file with all
+				your design documents.
+			</p>
 			<form
 				action="/api/projects"
 				method="POST"

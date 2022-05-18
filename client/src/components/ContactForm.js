@@ -28,10 +28,21 @@ export default function ContactForm() {
 			.then((response) => response.json())
 			.then((data) => console.log(data))
 			.catch((error) => console.error(error));
+
+		setSenderDetails({
+			full_name: "",
+			organization: "",
+			email: "",
+			phone: "",
+			message: "",
+		});
 	};
 
 	return (
 		<div className="p-6 md:w-1/2 ">
+			<p className="text-3xl pb-6 text-indigo-900">
+				Get in touch to discuss your needs!
+			</p>
 			<form
 				onSubmit={handleSendEmail}
 				method="POST"

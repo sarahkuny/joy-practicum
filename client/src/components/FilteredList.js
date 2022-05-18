@@ -6,7 +6,7 @@ export default function FilteredList({ filteredList }) {
 			{filteredList.length ? (
 				<div className=" flex  p-6 relative">
 					<div className=" p-6 border border-indigo-300 max-w-lg bg-white rounded-lg  shadow-md hover:bg-gray-100">
-						<table cclassName="table-auto ">
+						<table className="table-auto ">
 							<thead>
 								<tr className="whitespace-nowrap">
 									<th className="px-6 text-left">Intructors</th>

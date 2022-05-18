@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Header({ showStaffView, setShowStaffView }) {
 	return (
-		<header className="flex justify-between items-center px-6 py-4 bg-orange-50">
+		<header className="flex justify-between items-center px-6 py-4 bg-orange-50 ">
 			<h1 className="text-2xl text-indigo-700 italic font-bold tracking-wide underline decoration-1 underline-offset-2 font-mono">
 				{" "}
 				practicum

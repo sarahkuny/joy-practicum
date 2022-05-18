@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ProjectsForm from "./components/ProjectForm";
-import Projects from "./components/Projects";
 import ContactForm from "./components/ContactForm";
-import FilteredList from "./components/FilteredList";
+
 import Header from "./components/Header";
 import StaffView from "./components/StaffView";
+import Hero from "./components/Hero";
 
 function App() {
 	const [projects, setProjects] = useState([]);
@@ -49,6 +49,7 @@ function App() {
 				showStaffView={showStaffView}
 				setShowStaffView={setShowStaffView}
 			/>
+			{!showStaffView && <Hero />}
 			{!showStaffView && (
 				<div className="flex gap-2 flex-col md:flex-row">
 					<ContactForm />

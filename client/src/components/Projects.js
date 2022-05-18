@@ -88,7 +88,7 @@ export default function Projects({
 			.catch((error) => console.error(error));
 	};
 	return (
-		<div className="grid sm:grid-cols-2 md:grid-cols-3  gap-4 text-indigo-900 p-6">
+		<div className="grid sm:grid-cols-2 lg:grid-cols-3  gap-4 text-indigo-900 p-6">
 			{projects.map((project, index) => {
 				return (
 					<div
@@ -126,9 +126,13 @@ export default function Projects({
 							</li>
 						</ul>
 
-						<div className="font-bold my-2">
+						<div className="font-bold my-2 hover:bg-orange-50">
 							File:
-							<a href={`http://localhost:5000/${project.project_files}`}>
+							{/* file can be downloaded by clicking this link */}
+							<a
+								className="ml-1"
+								href={`http://localhost:5000/${project.project_files}`}
+							>
 								{project.file_name}
 							</a>
 						</div>
@@ -156,9 +160,9 @@ export default function Projects({
 							<button
 								className={classnames(
 									project.accepted === 0 &&
-										"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 mt-auto ",
+										"bg-indigo-500  text-white py-2 px-4 rounded  opacity-50 mt-auto block",
 									project.accepted === 1 &&
-										"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto "
+										"hover:bg-indigo-700 opacity-100 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto block"
 								)}
 								onClick={() => {
 									// assigns student to instr and proj
