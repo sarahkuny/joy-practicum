@@ -9,6 +9,8 @@ import StaffView from "./components/StaffView";
 function App() {
 	const [projects, setProjects] = useState([]);
 	const [filteredList, setFilteredList] = useState([]);
+	const [showStaffView, setShowStaffView] = useState(false);
+
 	useEffect(() => {
 		fetch("/api/projects/")
 			.then((response) => response.json())
@@ -43,22 +45,29 @@ function App() {
 
 	return (
 		<div className="App ">
-			<Header />
-			<div className="flex gap-2 flex-col md:flex-row">
-				<ContactForm />
-				<ProjectsForm
+			<Header
+				showStaffView={showStaffView}
+				setShowStaffView={setShowStaffView}
+			/>
+			{!showStaffView && (
+				<div className="flex gap-2 flex-col md:flex-row">
+					<ContactForm />
+					<ProjectsForm
+						projects={projects}
+						setProjects={setProjects}
+						getFilteredList={getFilteredList}
+						filteredList={filteredList}
+					/>
+				</div>
+			)}
+			{showStaffView && (
+				<StaffView
 					projects={projects}
 					setProjects={setProjects}
-					getFilteredList={getFilteredList}
 					filteredList={filteredList}
+					getFilteredList={getFilteredList}
 				/>
-			</div>
-			<StaffView
-				projects={projects}
-				setProjects={setProjects}
-				filteredList={filteredList}
-				getFilteredList={getFilteredList}
-			/>
+			)}
 		</div>
 	);
 }
