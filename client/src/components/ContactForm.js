@@ -9,6 +9,9 @@ export default function ContactForm() {
 		message: "",
 	});
 
+	// for keeping track of the number of characters in textarea
+	const [characterCount, setCharacterCount] = useState(0);
+	console.log(characterCount);
 	const handleInputChange = (event) => {
 		const name = event.target.name;
 		const value = event.target.value;
@@ -42,6 +45,10 @@ export default function ContactForm() {
 		});
 	};
 
+	const handleCharacterCountdown = (event) => {
+		// count the length of the str
+		setCharacterCount(500 - event.target.value.length);
+	};
 	return (
 		<div className="p-6 md:w-1/2 ">
 			<p className="text-3xl pb-6 text-indigo-900">
@@ -109,13 +116,16 @@ export default function ContactForm() {
 
 					<div className="flex flex-col col-span-2">
 						<label htmlFor="message">
-							<div className="flex align-items">
+							<div className="flex ">
 								Message
 								<span className="ml-auto opacity-75">Max. 500 characters</span>
 							</div>
 						</label>
 						<textarea
-							onChange={(event) => handleInputChange(event)}
+							onChange={(event) => {
+								handleInputChange(event);
+								handleCharacterCountdown(event);
+							}}
 							maxLength="500"
 							rows="4"
 							type="text"
@@ -128,9 +138,13 @@ export default function ContactForm() {
 					</div>
 				</div>
 				<div className="flex justify-end py-4">
+					<span className="opacity-75">
+						{characterCount} characters remaining
+					</span>
+
 					<button
 						type="submit"
-						className="bg-indigo-500 hover:bg-indigo-700 focus:ring focus:ring-indigo-300 ring-offset-2 text-white py-2 px-4 rounded"
+						className="bg-indigo-500 hover:bg-indigo-700 focus:ring focus:ring-indigo-300 ring-offset-2 text-white py-2 px-4 rounded block ml-auto"
 					>
 						Send
 					</button>
