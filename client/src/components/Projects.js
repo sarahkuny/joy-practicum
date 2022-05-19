@@ -31,9 +31,7 @@ export default function Projects({
 				setStudents(data);
 			})
 			.catch((error) => console.error(error));
-	}, []);
 
-	useEffect(() => {
 		fetch("/api/instructors/")
 			.then((response) => response.json())
 			.then((data) => {

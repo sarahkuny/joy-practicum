@@ -20,9 +20,7 @@ function App() {
 				setProjects(data);
 			})
 			.catch((error) => console.error(error));
-	}, []);
 
-	useEffect(() => {
 		fetch("/api/students/filter")
 			.then((response) => response.json())
 			.then((data) => {

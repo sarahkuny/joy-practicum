@@ -27,7 +27,7 @@ export default function Students({
 			(assignment) => assignment.project_id === project.project_id
 		);
 	}
-	console.log(assignedStudent);
+
 	return (
 		<div>
 			{/* TERNARY IN RETURN */}

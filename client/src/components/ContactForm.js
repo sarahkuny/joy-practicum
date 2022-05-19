@@ -11,7 +11,6 @@ export default function ContactForm() {
 
 	// for keeping track of the number of characters in textarea
 	const [characterCount, setCharacterCount] = useState(0);
-	console.log(characterCount);
 	const handleInputChange = (event) => {
 		const name = event.target.name;
 		const value = event.target.value;

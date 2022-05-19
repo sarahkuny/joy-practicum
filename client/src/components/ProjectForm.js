@@ -106,6 +106,7 @@ export default function ProjectsForm({ projects, setProjects }) {
 							Full Name
 						</label>
 						<input
+							required
 							value={formData.contact_person}
 							onChange={handleInputChange}
 							type="text"
@@ -120,6 +121,7 @@ export default function ProjectsForm({ projects, setProjects }) {
 							Name of Business
 						</label>
 						<input
+							required
 							value={formData.business_name}
 							onChange={handleInputChange}
 							type="text"
@@ -134,6 +136,7 @@ export default function ProjectsForm({ projects, setProjects }) {
 							Email
 						</label>
 						<input
+							required
 							value={formData.email}
 							onChange={handleInputChange}
 							type="email"
@@ -148,6 +151,7 @@ export default function ProjectsForm({ projects, setProjects }) {
 							Phone Number
 						</label>
 						<input
+							required
 							value={formData.phone}
 							onChange={handleInputChange}
 							type="phone"
@@ -165,6 +169,7 @@ export default function ProjectsForm({ projects, setProjects }) {
 						{/* In React, an <input type="file" /> is always an uncontrolled component because its value can only be set by a user, and not programmatically. */}
 						{/* the ref obj is passed to the file input as a prop */}
 						<input
+							required
 							onChange={handleFileChange}
 							type="file"
 							id="project_files"
