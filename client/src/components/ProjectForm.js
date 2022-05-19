@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 export default function ProjectsForm({ projects, setProjects }) {
 	const [formData, setFormData] = useState({
@@ -151,6 +151,7 @@ export default function ProjectsForm({ projects, setProjects }) {
 						<label htmlFor="fileUpload" className="text-gray-700">
 							Upload your files
 						</label>
+						{/* In React, an <input type="file" /> is always an uncontrolled component because its value can only be set by a user, and not programmatically. */}
 						<input
 							onChange={handleFileChange}
 							type="file"

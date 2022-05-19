@@ -29,6 +29,10 @@ export default function ContactForm() {
 			.then((data) => console.log(data))
 			.catch((error) => console.error(error));
 
+		resetContactForm();
+	};
+
+	const resetContactForm = () => {
 		setSenderDetails({
 			full_name: "",
 			organization: "",
@@ -44,7 +48,9 @@ export default function ContactForm() {
 				Get in touch to discuss your needs!
 			</p>
 			<form
-				onSubmit={handleSendEmail}
+				onSubmit={(event) => {
+					handleSendEmail(event);
+				}}
 				method="POST"
 				action="/contact"
 				className=" mx-auto"
@@ -57,6 +63,7 @@ export default function ContactForm() {
 							type="text"
 							id="full_name"
 							name="full_name"
+							value={senderDetails.full_name}
 							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 							required
 						/>
@@ -68,6 +75,7 @@ export default function ContactForm() {
 							type="text"
 							id="organization"
 							name="organization"
+							value={senderDetails.organization}
 							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 							required
 						/>
@@ -79,6 +87,7 @@ export default function ContactForm() {
 							type="email"
 							id="email"
 							name="email"
+							value={senderDetails.email}
 							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 							required
 						/>
@@ -92,6 +101,7 @@ export default function ContactForm() {
 							type="tel"
 							id="phone"
 							name="phone"
+							value={senderDetails.phone}
 							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 							required
 						/>
@@ -111,6 +121,7 @@ export default function ContactForm() {
 							type="text"
 							id="message"
 							name="message"
+							value={senderDetails.message}
 							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 							required
 						/>
