@@ -9,6 +9,13 @@ export default function ProjectsForm({ projects, setProjects }) {
 		email: "",
 		phone: "",
 	});
+	// useref hook is needed to set the value property of the file input to an empty string since it can't be managed with state
+	const ref = useRef();
+
+	// creates a ref object. ref.current is the file input since we passed ref to the file input in a prop
+	const resetFileInput = () => {
+		ref.current.value = "";
+	};
 
 	// handling multiple inputs with a single onchange
 	const handleInputChange = (event) => {
@@ -86,7 +93,11 @@ export default function ProjectsForm({ projects, setProjects }) {
 				action="/api/projects"
 				method="POST"
 				encType="multipart/form-data"
-				onSubmit={handleSubmit}
+				onSubmit={(event) => {
+					handleSubmit(event);
+					// onsubmit reset the file input
+					resetFileInput();
+				}}
 				className=" mx-auto"
 			>
 				<div className="grid grid-cols-2 gap-4">
@@ -152,11 +163,13 @@ export default function ProjectsForm({ projects, setProjects }) {
 							Upload your files
 						</label>
 						{/* In React, an <input type="file" /> is always an uncontrolled component because its value can only be set by a user, and not programmatically. */}
+						{/* the ref obj is passed to the file input as a prop */}
 						<input
 							onChange={handleFileChange}
 							type="file"
 							id="project_files"
 							name="project_files"
+							ref={ref}
 							className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 						/>
 					</div>
