@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-export default function NewStudentForm({ setStudents }) {
-	const [studentDetails, setStudentDetails] = useState({
+// since instructors and students have the same data structure and require the same functions and form, I made this component reusable. The major functionality is determined by what's passed in props. stateSetter is either the setStudents or setInstructors function which is called after the api gives us a response. The enpoint of the fetch route is determined by the value of the route prop (either "students" or "instructors")
+export default function NewPersonForm({ stateSetter, route }) {
+	const [details, setDetails] = useState({
 		first_name: "",
 		last_name: "",
 		email: "",
@@ -11,31 +12,34 @@ export default function NewStudentForm({ setStudents }) {
 		const name = event.target.name;
 		const value = event.target.value;
 
-		setStudentDetails({
-			...studentDetails,
+		setDetails({
+			...details,
 			[name]: value,
 		});
 	};
 
-	console.log(studentDetails);
-	const handleAddStudent = (event) => {
+	console.log(details);
+
+	const handleAddPerson = (event) => {
 		event.preventDefault();
 
-		fetch("/api/students", {
+		fetch(`/api/${route}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(studentDetails),
+			body: JSON.stringify(details),
 		})
 			.then((response) => response.json())
 			.then((data) => {
+				// in oder to dynamically determine the name of the function that will be called here (either setStudents or setInstructors), I need to first pass the function (from the stateSetter prop) as the value of a variable with a different name. Then call the stateSetter function using that variable name.
+				const setState = stateSetter;
 				console.log(data);
-				setStudents(data);
+				setState(data);
 			})
 			.catch((error) => console.error(error));
 
-		setStudentDetails({
+		setDetails({
 			first_name: "",
 			last_name: "",
 			email: "",
@@ -45,10 +49,10 @@ export default function NewStudentForm({ setStudents }) {
 		<div className="w-96 z-10 p-6 border border-indigo-300 max-w-lg bg-white rounded-lg  shadow-md  mt-4">
 			<form
 				onSubmit={(event) => {
-					handleAddStudent(event);
+					handleAddPerson(event);
 				}}
 				method="POST"
-				action="/api/students"
+				action={`/api/${route}`}
 				className="z-10 grid grid-cols-2 gap-4 w-full"
 			>
 				<div className="flex flex-col z-10">
@@ -58,7 +62,7 @@ export default function NewStudentForm({ setStudents }) {
 						type="text"
 						id="first_name"
 						name="first_name"
-						value={studentDetails.first_name}
+						value={details.first_name}
 						className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 						required
 					/>
@@ -70,7 +74,7 @@ export default function NewStudentForm({ setStudents }) {
 						type="text"
 						id="last_name"
 						name="last_name"
-						value={studentDetails.last_name}
+						value={details.last_name}
 						className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 						required
 					/>
@@ -82,7 +86,7 @@ export default function NewStudentForm({ setStudents }) {
 						type="email"
 						id="email"
 						name="email"
-						value={studentDetails.email}
+						value={details.email}
 						className=" rounded-lg appearance-none border border-indigo-300 py-2 px-4  shadow-sm text-base focus:outline-none focus:ring-1 focus:ring-purple-600 focus:border-transparent"
 						required
 					/>

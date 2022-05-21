@@ -36,6 +36,7 @@ export default function StaffView({
 					filteredList={filteredList}
 					getFilteredList={getFilteredList}
 					setStudents={setStudents}
+					setInstructors={setInstructors}
 				/>
 			</div>
 

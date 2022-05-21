@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import FilteredList from "./FilteredList";
-import NewStudentForm from "./NewStudentForm";
+import NewPersonForm from "./NewPersonForm";
 
 export default function Sidebar({
+	setInstructors,
 	setStudents,
 	filteredList,
 	getFilteredList,
 }) {
 	const [showList, setShowList] = useState(false);
 	const [showAddStudent, setShowAddStudent] = useState(false);
+	const [showAddInstructor, setShowAddInstructor] = useState(false);
 	const toggleShowList = () => {
 		setShowList(!showList);
 	};
@@ -25,7 +27,21 @@ export default function Sidebar({
 			</button>
 			{showList && <FilteredList filteredList={filteredList} />}
 
-			<div className=" mt-4 z-10">
+			<div className="z-10">
+				<button
+					onClick={() => {
+						setShowAddInstructor(!showAddInstructor);
+					}}
+					className="block bg-indigo-500 hover:bg-indigo-700 text-white text-sm  py-2 px-4 rounded"
+				>
+					{showAddInstructor ? "Close" : "Add Instructor"}
+				</button>
+				{showAddInstructor && (
+					<NewPersonForm stateSetter={setInstructors} route={"instructors"} />
+				)}
+			</div>
+
+			<div className="z-10">
 				<button
 					onClick={() => {
 						setShowAddStudent(!showAddStudent);
@@ -34,7 +50,10 @@ export default function Sidebar({
 				>
 					{showAddStudent ? "Close" : "Add Student"}
 				</button>
-				{showAddStudent && <NewStudentForm setStudents={setStudents} />}
+				{/* NewPersonForm is a generic component. It's specific route is determined by what is passed as the route prop and the state it sets after the api call, is determined by what's passed in the statesetter prop  */}
+				{showAddStudent && (
+					<NewPersonForm stateSetter={setStudents} route={"students"} />
+				)}
 			</div>
 		</div>
 	);
