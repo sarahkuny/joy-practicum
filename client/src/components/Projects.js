@@ -8,9 +8,9 @@ import { HiOutlineMail } from "react-icons/hi";
 
 export default function Projects({
 	students,
-	setStudents,
+
 	instructors,
-	setInstructors,
+
 	projects,
 	setProjects,
 	getFilteredList,

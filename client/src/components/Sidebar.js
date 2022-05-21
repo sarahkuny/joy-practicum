@@ -15,24 +15,24 @@ export default function Sidebar({
 		setShowList(!showList);
 	};
 	return (
-		<div className="px-3 py-6  flex flex-col gap-4">
+		<div className="px-3 py-6  flex flex-col gap-4 h-screen">
 			<button
 				onClick={() => {
 					toggleShowList();
 					getFilteredList();
 				}}
-				className="block bg-indigo-500 hover:bg-indigo-700 text-white text-sm  py-2 px-4 rounded"
+				className="block bg-indigo-500 hover:bg-indigo-700 text-white text-xs sm:text-sm p-1 sm:py-2 sm:px-4 rounded mx-auto"
 			>
-				{showList ? "Close" : "All Assignments"}
+				{showList ? "Close" : "Show All"}
 			</button>
 			{showList && <FilteredList filteredList={filteredList} />}
 
-			<div className="z-10">
+			<div className="z-10 mx-auto">
 				<button
 					onClick={() => {
 						setShowAddInstructor(!showAddInstructor);
 					}}
-					className="block bg-indigo-500 hover:bg-indigo-700 text-white text-sm  py-2 px-4 rounded"
+					className="block bg-indigo-500 hover:bg-indigo-700 text-white text-xs sm:text-sm p-1 sm:py-2 sm:px-4 rounded"
 				>
 					{showAddInstructor ? "Close" : "Add Instructor"}
 				</button>
@@ -41,12 +41,12 @@ export default function Sidebar({
 				)}
 			</div>
 
-			<div className="z-10">
+			<div className="z-10 mx-auto">
 				<button
 					onClick={() => {
 						setShowAddStudent(!showAddStudent);
 					}}
-					className="block bg-indigo-500 hover:bg-indigo-700 text-white text-sm  py-2 px-4 rounded"
+					className="block bg-indigo-500 hover:bg-indigo-700 text-white text-xs sm:text-sm p-1 sm:py-2 sm:px-4 rounded"
 				>
 					{showAddStudent ? "Close" : "Add Student"}
 				</button>

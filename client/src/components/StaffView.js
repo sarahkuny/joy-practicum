@@ -31,7 +31,7 @@ export default function StaffView({
 
 	return (
 		<div className="flex gap-4">
-			<div className="w-1/6 bg-orange-50 ">
+			<div className="w-1/6 lg:w-44 bg-orange-50 ">
 				<Sidebar
 					filteredList={filteredList}
 					getFilteredList={getFilteredList}
@@ -43,9 +43,7 @@ export default function StaffView({
 			<div className="w-5/6">
 				<Projects
 					students={students}
-					setStudents={setStudents}
 					instructors={instructors}
-					setInstructors={setInstructors}
 					projects={projects}
 					setProjects={setProjects}
 					filteredList={filteredList}
