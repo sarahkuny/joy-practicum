@@ -4,8 +4,8 @@ export default function FilteredList({ filteredList }) {
 	return (
 		<div>
 			{filteredList.length ? (
-				<div className=" flex  p-6 relative">
-					<div className=" p-6 border border-indigo-300 max-w-lg bg-white rounded-lg  shadow-md hover:bg-gray-100">
+				<div className=" flex ">
+					<div className=" p-6 border border-indigo-300 max-w-lg bg-white rounded-lg  shadow-md hover:bg-indigo-100 z-10">
 						<table className="table-auto ">
 							<thead>
 								<tr className="whitespace-nowrap">

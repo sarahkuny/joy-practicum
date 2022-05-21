@@ -57,7 +57,7 @@ This project essentially has two pages:
 # Feature Extensions
 
 - secure staff login
-- add a new instructor or student
+- add a new instructor
 - remove completed projects from main view
 - send email with all relevant project details and files to student once they've been assigned to a project
 - multiple file uploads

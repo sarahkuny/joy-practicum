@@ -18,8 +18,8 @@ CREATE TABLE `bootcamp_students` (
 	`first_name` varchar(40) NOT NULL,
 	`last_name` varchar(40) NOT NULL,
 	`email` varchar(40) NOT NULL,
-	`project_id` int NOT NULL,
-	`instructor_id` int NOT NULL,
+	`project_id` int,
+	`instructor_id` int,
 	PRIMARY KEY (`student_id`)
 );
 

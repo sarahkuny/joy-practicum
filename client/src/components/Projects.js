@@ -7,6 +7,10 @@ import { HiOutlinePhone } from "react-icons/hi";
 import { HiOutlineMail } from "react-icons/hi";
 
 export default function Projects({
+	students,
+	setStudents,
+	instructors,
+	setInstructors,
 	projects,
 	setProjects,
 	getFilteredList,
@@ -14,32 +18,12 @@ export default function Projects({
 }) {
 	// created state for the selected student id to be able to access it outside of the map that populates the student list
 	const [selectedStudent, setSelectedStudent] = useState({});
-	const [students, setStudents] = useState([]);
-	const [instructors, setInstructors] = useState([]);
 
 	// stores the obj that put is expecting to update students foreign keys
 	const [assignments, setAssignments] = useState({
 		project_id: null,
 		instructor_id: null,
 	});
-
-	useEffect(() => {
-		fetch("/api/students/")
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
-				setStudents(data);
-			})
-			.catch((error) => console.error(error));
-
-		fetch("/api/instructors/")
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
-				setInstructors(data);
-			})
-			.catch((error) => console.error(error));
-	}, []);
 
 	// This function assembles the object that PUT is expecting in the backend to fill in foreign keys in students table
 	const buildAssignmentsObject = (event, project) => {

@@ -26,9 +26,9 @@ router.get("/", async (req, res, next) => {
 
 // POST: create new student
 router.post("/", async (req, res, next) => {
-	const { first_name, last_name, email, project_id, instructor_id } = req.body;
-
-	const sql = `INSERT INTO bootcamp_students (first_name, last_name, email, project_id, instructor_id) VALUES ("${first_name}", "${last_name}","${email}","${project_id}","${instructor_id}");`;
+	const { first_name, last_name, email } = req.body;
+	console.log(req.body);
+	const sql = `INSERT INTO bootcamp_students (first_name, last_name, email) VALUES ("${first_name}", "${last_name}","${email}");`;
 
 	try {
 		// initially, results is what's returned from the post request.
