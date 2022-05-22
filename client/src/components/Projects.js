@@ -49,7 +49,7 @@ export default function Projects({
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
-				// this causes the select element to reset back to "select student" since state updates
+				// this causes the select element to reset back to "select student" since state updates. functionality to replace select elements with the names of those selected doesn't work without setStudents here.
 				setStudents(data);
 			})
 			.catch((error) => console.error(error));
