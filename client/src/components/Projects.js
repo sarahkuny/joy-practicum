@@ -151,7 +151,6 @@ export default function Projects({
 								/>
 								<span className="mt-2">Supervised by:</span>
 								<Instructors
-									students={students}
 									filteredList={filteredList}
 									instructors={instructors}
 									buildAssignmentsObject={buildAssignmentsObject}

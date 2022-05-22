@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import FilteredList from "./FilteredList";
 
 export default function Instructors({
-	students,
 	filteredList,
 	instructors,
 	buildAssignmentsObject,
