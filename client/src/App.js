@@ -39,6 +39,7 @@ function App() {
 				setFilteredList(data);
 			})
 			.catch((error) => console.error(error));
+		console.log("done fetching filtered");
 	};
 
 	return (

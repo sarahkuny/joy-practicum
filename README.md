@@ -57,7 +57,7 @@ This project essentially has two pages:
 # Feature Extensions
 
 - secure staff login
-- confirmation for successful sent message and upload
+- confirmation on successful addition of new student or instructor, sent message from the Contact Form and uploads from Project Submission Form
 - remove an instructor or student
 - remove completed projects from main view
 - send email with all relevant project details and files to student once they've been assigned to a project

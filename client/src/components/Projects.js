@@ -69,9 +69,11 @@ export default function Projects({
 			})
 			.catch((error) => console.error(error));
 	};
+
 	return (
 		<div className="grid sm:grid-cols-2 lg:grid-cols-3  gap-4 text-indigo-900 p-6">
 			{projects.map((project, index) => {
+				console.log(project);
 				return (
 					<div
 						key={project.project_id}

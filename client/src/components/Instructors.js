@@ -15,17 +15,17 @@ export default function Instructors({
 		setSelectedInstructor(instructor);
 	};
 
-	let supervisingInstructor = "";
+	let supervisingInstructor = {};
 	if (filteredList.length) {
 		supervisingInstructor = filteredList.find(
 			(assignment) => assignment.project_id === project.project_id
 		);
 	}
-
+	console.log(supervisingInstructor);
 	return (
 		<div>
 			{/* TERNARY IN RETURN */}
-			{project.assigned ? (
+			{project.assigned && supervisingInstructor != null ? (
 				<span className="font-bold">
 					{supervisingInstructor.instructor_name}
 				</span>
