@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Students({
 	filteredList,
@@ -20,14 +20,19 @@ export default function Students({
 		setSelectedStudent(student);
 	};
 
+	// needs to be a state variable so that a rerender is triggered and ui updates
+	const [assignedStudent, setAssignedStudent] = useState({});
 	// this solves the problem of persisting the value of the select element without state, which would've required an unknown number of state variables to handle each individual project assignment. Basically, I need to get this assignment from the filtered list which is generated once an assignment has been made. it is the result of the sql join.
-	let assignedStudent = {};
+
 	// check needed in case there's nothing in filteredlist like when the tables are all freshly generated and no assignments have been made
-	if (filteredList.length) {
-		assignedStudent = filteredList.find(
-			(assignment) => assignment.project_id === project.project_id
-		);
-	}
+	useEffect(() => {
+		if (filteredList.length) {
+			const assigned = filteredList.find(
+				(assignment) => assignment.project_id === project.project_id
+			);
+			setAssignedStudent(assigned);
+		}
+	}, []);
 
 	console.log({ assignedStudent });
 	return (

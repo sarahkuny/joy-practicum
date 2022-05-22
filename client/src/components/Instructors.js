@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FilteredList from "./FilteredList";
 
 export default function Instructors({
@@ -7,7 +7,11 @@ export default function Instructors({
 	buildAssignmentsObject,
 	project,
 }) {
+	// this is simply the value of the select element. It might change if the user scrolls to another instructor.
 	const [selectedInstructor, setSelectedInstructor] = useState({});
+
+	// this is the instructor that was actually assigned to supervise a project.
+	const [supervisingInstructor, setSupervisingInstructor] = useState({});
 
 	const getSelectedInstructor = (event) => {
 		const instructor = instructors[event.target.selectedIndex - 1];
@@ -15,12 +19,15 @@ export default function Instructors({
 		setSelectedInstructor(instructor);
 	};
 
-	let supervisingInstructor = {};
-	if (filteredList.length) {
-		supervisingInstructor = filteredList.find(
-			(assignment) => assignment.project_id === project.project_id
-		);
-	}
+	useEffect(() => {
+		if (filteredList.length) {
+			const supervisor = filteredList.find(
+				(assignment) => assignment.project_id === project.project_id
+			);
+			setSupervisingInstructor(supervisor);
+		}
+	}, []);
+
 	console.log(supervisingInstructor);
 	return (
 		<div>
