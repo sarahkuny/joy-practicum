@@ -43,7 +43,9 @@ export default function StaffView({
 			<div className="w-5/6">
 				<Projects
 					students={students}
+					setStudents={setStudents}
 					instructors={instructors}
+					setInstructors={setInstructors}
 					projects={projects}
 					setProjects={setProjects}
 					filteredList={filteredList}

@@ -5,7 +5,11 @@ export default function Students({
 	setSelectedStudent,
 	students,
 	project,
+	projects,
 }) {
+	// needs to be a state variable so that a rerender is triggered and ui updates
+	const [assignedStudent, setAssignedStudent] = useState({});
+
 	// this creates a list of unassigned students so that the select elements is populated with only students not yet assigned. this prevents the code from breaking in case of accidentally selecting a student already assigned. this would making project.assigned true, but without a student acctually being assigned.
 	const unassignedStudents = students.filter(
 		(student) => student.project_id === null
@@ -20,8 +24,6 @@ export default function Students({
 		setSelectedStudent(student);
 	};
 
-	// needs to be a state variable so that a rerender is triggered and ui updates
-	const [assignedStudent, setAssignedStudent] = useState({});
 	// this solves the problem of persisting the value of the select element without state, which would've required an unknown number of state variables to handle each individual project assignment. Basically, I need to get this assignment from the filtered list which is generated once an assignment has been made. it is the result of the sql join.
 
 	// check needed in case there's nothing in filteredlist like when the tables are all freshly generated and no assignments have been made
@@ -32,16 +34,19 @@ export default function Students({
 			);
 			setAssignedStudent(assigned);
 		}
-	}, []);
+		// without projects in dep array, functionality to replace selected elements with those selected breaks.
+	}, [filteredList, project.project_id, projects]);
 
 	console.log({ assignedStudent });
+	console.log(project.assigned === 1 && assignedStudent != null);
+	console.log(project.assigned);
+	console.log(assignedStudent != null);
 	return (
 		<div>
 			{/* TERNARY IN RETURN */}
 			{/* undefined === null = false but undefined == null is true.  using triple equal here broke code because I wasn't checking for undefined. */}
-			{project.assigned && assignedStudent != null ? (
+			{project.assigned === 1 && assignedStudent != null ? (
 				<span className="font-bold">
-					{"Testing" + assignedStudent + " " + project.project_id}{" "}
 					{assignedStudent.first_name} {assignedStudent.last_name}
 				</span>
 			) : (
@@ -50,10 +55,7 @@ export default function Students({
 					onChange={(event) => {
 						getSelectedStudent(event);
 					}}
-					disabled={
-						project.accepted === 0 ||
-						(project.accepted === 1 && project.completed === 1)
-					}
+					disabled={project.accepted === 0}
 				>
 					<option value="Select Student">Select Student</option>
 					{unassignedStudents.map((student) => (

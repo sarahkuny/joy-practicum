@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import FilteredList from "./FilteredList";
 
 export default function Instructors({
+	students,
 	filteredList,
 	instructors,
 	buildAssignmentsObject,
 	project,
+	projects,
 }) {
 	// this is simply the value of the select element. It might change if the user scrolls to another instructor.
 	const [selectedInstructor, setSelectedInstructor] = useState({});
 
-	// this is the instructor that was actually assigned to supervise a project.
+	// this is the instructor that was actually assigned to supervise a project. It is actually the object that is returned from the call that triggers the sql join. this object has instructor name, student first and last name, projectid and studentid
 	const [supervisingInstructor, setSupervisingInstructor] = useState({});
 
 	const getSelectedInstructor = (event) => {
@@ -26,13 +28,18 @@ export default function Instructors({
 			);
 			setSupervisingInstructor(supervisor);
 		}
-	}, []);
+		// without projects in dep array, functionality to replace selected elements with those selected breaks.
+	}, [filteredList, project.project_id, projects]);
 
 	console.log(supervisingInstructor);
+	console.log(project.assigned === 1 && supervisingInstructor != null);
+	console.log(project.assigned);
+	console.log(supervisingInstructor != null);
+
 	return (
 		<div>
 			{/* TERNARY IN RETURN */}
-			{project.assigned && supervisingInstructor != null ? (
+			{project.assigned === 1 && supervisingInstructor != null ? (
 				<span className="font-bold">
 					{supervisingInstructor.instructor_name}
 				</span>
@@ -43,10 +50,7 @@ export default function Instructors({
 						buildAssignmentsObject(event, project);
 						getSelectedInstructor(event);
 					}}
-					disabled={
-						project.accepted === 0 ||
-						(project.accepted === 1 && project.completed === 1)
-					}
+					disabled={project.accepted === 0}
 				>
 					<option value="Select Instructor">Select Instructor</option>
 					{instructors.map((instructor) => (

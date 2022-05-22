@@ -8,9 +8,9 @@ import { HiOutlineMail } from "react-icons/hi";
 
 export default function Projects({
 	students,
-
+	setStudents,
 	instructors,
-
+	setInstructors,
 	projects,
 	setProjects,
 	getFilteredList,
@@ -47,7 +47,11 @@ export default function Projects({
 			body: JSON.stringify(assignments),
 		})
 			.then((response) => response.json())
-			.then((data) => console.log(data))
+			.then((data) => {
+				console.log(data);
+				// this causes the select element to reset back to "select student" since state updates
+				setStudents(data);
+			})
 			.catch((error) => console.error(error));
 
 		// after assignments have been made, reset assignments object
@@ -60,26 +64,39 @@ export default function Projects({
 			headers: {
 				"Content-Type": "application/json",
 			},
-
 			body: JSON.stringify({ assigned: "true" }),
 		})
 			.then((response) => response.json())
 			.then((data) => {
+				console.log("projects is being set now", data);
 				setProjects(data);
 			})
 			.catch((error) => console.error(error));
 	};
 
+	useEffect(() => {
+		console.log("second fetch to projects starting");
+		fetch("/api/projects/")
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
+				console.log("projects is being set again");
+				setProjects(data);
+			})
+			.catch((error) => console.error(error));
+		// need assignments in dep array to force rerender. not entirely sure but replacing select elements with the names of those selected breaks without it!
+	}, [setProjects, assignments]);
+
 	return (
 		<div className="grid sm:grid-cols-2 lg:grid-cols-3  gap-4 text-indigo-900 p-6">
 			{projects.map((project, index) => {
-				console.log(project);
 				return (
 					<div
 						key={project.project_id}
 						// using classname strings here to conditionally add styling to show status of project
 						className={classnames(
-							"flex flex-col p-6 border border-red-300  bg-white rounded-lg  shadow-md hover:bg-red-100",
+							`flex flex-col p-6 border border-red-300  bg-white rounded-lg  shadow-md hover:bg-red-100 `,
 							project.accepted === 1 && "hover:bg-amber-100 border-amber-300",
 							project.completed === 1 && "hover:bg-green-100 border-green-300"
 						)}
@@ -130,13 +147,16 @@ export default function Projects({
 									setSelectedStudent={setSelectedStudent}
 									students={students}
 									project={project}
+									projects={projects}
 								/>
 								<span className="mt-2">Supervised by:</span>
 								<Instructors
+									students={students}
 									filteredList={filteredList}
 									instructors={instructors}
 									buildAssignmentsObject={buildAssignmentsObject}
 									project={project}
+									projects={projects}
 								/>
 							</div>
 						</div>
