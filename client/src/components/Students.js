@@ -38,9 +38,12 @@ export default function Students({
 	}, [filteredList, project.project_id, projects]);
 
 	console.log({ assignedStudent });
-	console.log(project.assigned === 1 && assignedStudent != null);
-	console.log(project.assigned);
-	console.log(assignedStudent != null);
+	console.log(
+		"assigned && assignedSS not null?",
+		project.assigned === 1 && assignedStudent != null
+	);
+	console.log("project.assigned?", project.assigned);
+	console.log("assignedStudent not null?", assignedStudent != null);
 	return (
 		<div>
 			{/* TERNARY IN RETURN */}

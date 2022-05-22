@@ -10,7 +10,7 @@ export default function Projects({
 	students,
 	setStudents,
 	instructors,
-	setInstructors,
+
 	projects,
 	setProjects,
 	getFilteredList,
@@ -81,6 +81,7 @@ export default function Projects({
 				return response.json();
 			})
 			.then((data) => {
+				// doesn't seem to be called
 				console.log("projects is being set again");
 				setProjects(data);
 			})

@@ -30,9 +30,12 @@ export default function Instructors({
 	}, [filteredList, project.project_id, projects]);
 
 	console.log(supervisingInstructor);
-	console.log(project.assigned === 1 && supervisingInstructor != null);
-	console.log(project.assigned);
-	console.log(supervisingInstructor != null);
+	console.log(
+		"assigned && supervisor not null?",
+		project.assigned === 1 && supervisingInstructor != null
+	);
+	console.log("project.assigned?", project.assigned);
+	console.log("supervisor not null", supervisingInstructor != null);
 
 	return (
 		<div>
