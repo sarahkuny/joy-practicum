@@ -38,6 +38,7 @@ This project essentially has two pages:
 
 - React
 - Tailwind CSS
+- getwaves.io
 - React-icons (Heroicons)
 - classnames package
 
