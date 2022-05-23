@@ -23,7 +23,7 @@ This project essentially has two pages:
   - see all projects, their details and the current state of the projects using color coding:
 
     - red - project has not yet been accepted.
-    - yellow - project has been accepted and is awating .assignment or is being worked on
+    - yellow - project has been accepted and is awating assignment or is being worked on
     - green - project has been completed.
 
   - download the file uploaded when that project was submitted

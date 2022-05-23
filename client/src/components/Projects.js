@@ -108,7 +108,6 @@ export default function Projects({
 							ID:{project.project_id} {project.contact_person} at{" "}
 							{project.business_name}
 						</h1>
-
 						<ul>
 							<li>
 								<div className="flex gap-2 items-center text-sm">
@@ -127,7 +126,6 @@ export default function Projects({
 								</div>
 							</li>
 						</ul>
-
 						<div className="font-bold my-2 hover:bg-orange-50">
 							File:
 							{/* file can be downloaded by clicking this link */}
@@ -139,7 +137,6 @@ export default function Projects({
 							</a>
 						</div>
 						<Checkboxes setProjects={setProjects} project={project} />
-
 						<div>
 							<div className="flex flex-col">
 								<span className="mt-2">Assigned to: </span>
@@ -181,6 +178,16 @@ export default function Projects({
 							>
 								Assign
 							</button>
+						)}
+						{project.assigned ? (
+							<button
+								className=" opacity-50 focus:ring focus:ring-indigo-300 ring-offset-2 bg-indigo-500  text-white  py-2 px-4 rounded mt-auto block"
+								disabled
+							>
+								Email Student
+							</button>
+						) : (
+							<div></div>
 						)}
 					</div>
 				);

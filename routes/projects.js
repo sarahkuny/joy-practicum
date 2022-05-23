@@ -74,7 +74,7 @@ router.post("/", upload.single("project_files"), async (req, res, next) => {
 	const { contact_person, business_name, email, phone } = req.body;
 
 	// created_at, completed, accepted will have default values when project is created.
-	const sql = `INSERT INTO projects (project_files, file_name, contact_person,	business_name,email,phone,created_at,completed,	accepted) VALUES ("${correctedPath}","${filename}", "${contact_person}", "${business_name}","${email}","${phone}",now(),0,	0);`;
+	const sql = `INSERT INTO projects (project_files, file_name, contact_person, business_name,email, phone,created_at, completed, accepted, assigned) VALUES ("${correctedPath}","${filename}", "${contact_person}", "${business_name}","${email}","${phone}",now(), 0, 0, 0);`;
 
 	try {
 		// initially, results is what's returned from the post request.

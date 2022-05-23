@@ -57,9 +57,6 @@ export default function ProjectsForm({ projects, setProjects }) {
 		project.set("business_name", formData.business_name);
 		project.set("email", formData.email);
 		project.set("phone", formData.phone);
-		project.set("created_at", formData.created_at);
-		project.set("completed", 0);
-		project.set("accepted", 0);
 
 		fetch("/api/projects/", {
 			method: "POST",

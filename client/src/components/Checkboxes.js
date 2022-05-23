@@ -51,6 +51,7 @@ export default function Checkboxes({ setProjects, project }) {
 				className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
 				disabled={
 					project.accepted === 0 ||
+					project.assigned === 0 ||
 					(project.accepted === 1 && project.completed === 1)
 				}
 				defaultChecked={project.completed === 1}
