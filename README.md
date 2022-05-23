@@ -65,7 +65,7 @@ This project essentially has two pages:
 - remove an instructor or student
 - remove completed projects from main view
 - send email with all relevant project details and files to student once they've been assigned to a project
-- multiple file uploads
+- multiple file uploads and size and type limits to the uploads
 
 ​ \_This is a student project that was created at
 [CodeOp](http://codeop.tech), a full stack development bootcamp in Barcelona.
