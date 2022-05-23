@@ -91,7 +91,8 @@ export default function Projects({
 
 	return (
 		<div className="grid sm:grid-cols-2 lg:grid-cols-3  gap-4 text-indigo-900 p-6">
-			{projects.map((project, index) => {
+			{/* I'd like the most recently added projects to appear first. To do that, I made a shallow copy of the state projects array, reversed the order of elements, then did the map on that. */}
+			{[...projects].reverse().map((project, index) => {
 				return (
 					<div
 						key={project.project_id}
