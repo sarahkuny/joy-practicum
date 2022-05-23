@@ -173,6 +173,7 @@ export default function Projects({
 									handleAssignments();
 									// changes assigned to true in db
 									updateAssignedProperty(project.project_id);
+
 									// get the data representing the foreign keys in the students table
 									getFilteredList();
 								}}

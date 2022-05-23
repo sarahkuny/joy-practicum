@@ -31,7 +31,9 @@ export default function FilteredList({ filteredList }) {
 					</div>
 				</div>
 			) : (
-				<div></div>
+				<div className="text-indigo-900 text-md text-center w-auto">
+					No assignments have been made yet.
+				</div>
 			)}
 		</div>
 	);

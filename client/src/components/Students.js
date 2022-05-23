@@ -8,13 +8,13 @@ export default function Students({
 	projects,
 }) {
 	// needs to be a state variable so that a rerender is triggered and ui updates
-	const [assignedStudent, setAssignedStudent] = useState({});
+	const [assignedStudent, setAssignedStudent] = useState();
 
 	// this creates a list of unassigned students so that the select elements is populated with only students not yet assigned. this prevents the code from breaking in case of accidentally selecting a student already assigned. this would making project.assigned true, but without a student acctually being assigned.
 	const unassignedStudents = students.filter(
 		(student) => student.project_id === null
 	);
-	console.log(unassignedStudents);
+	// console.log(unassignedStudents);
 
 	const getSelectedStudent = (event) => {
 		// since the select element with onchange is outside of the map that fetches student list, I don't have access to the student object from the map. but i have access to event.target.selectedindex which I can use to find the student in the students state. Get the id from that obj
@@ -40,7 +40,7 @@ export default function Students({
 	console.log({ assignedStudent });
 	console.log(
 		"assigned && assignedSS not null?",
-		project.assigned === 1 && assignedStudent != null
+		project.assigned === 1 && assignedStudent !== null
 	);
 	console.log("project.assigned?", project.assigned);
 	console.log("assignedStudent not null?", assignedStudent != null);

@@ -11,7 +11,7 @@ export default function Instructors({
 	const [selectedInstructor, setSelectedInstructor] = useState({});
 
 	// this is the instructor that was actually assigned to supervise a project. It is actually the object that is returned from the call that triggers the sql join. this object has instructor name, student first and last name, projectid and studentid
-	const [supervisingInstructor, setSupervisingInstructor] = useState({});
+	const [supervisingInstructor, setSupervisingInstructor] = useState();
 
 	const getSelectedInstructor = (event) => {
 		const instructor = instructors[event.target.selectedIndex - 1];
@@ -32,7 +32,7 @@ export default function Instructors({
 	console.log(supervisingInstructor);
 	console.log(
 		"assigned && supervisor not null?",
-		project.assigned === 1 && supervisingInstructor != null
+		project.assigned === 1 && supervisingInstructor !== null
 	);
 	console.log("project.assigned?", project.assigned);
 	console.log("supervisor not null", supervisingInstructor != null);
