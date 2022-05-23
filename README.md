@@ -54,6 +54,10 @@ This project essentially has two pages:
 
 ![Practicum Database Schema](/model/practicum%20schema.png)
 
+# React Component Structure
+
+![Practicum Component Structre](/client/public/files/Practicum%20Component%20Structure.png)
+
 # Feature Extensions
 
 - secure staff login
