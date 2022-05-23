@@ -32,7 +32,7 @@ export default function Instructors({
 	console.log(supervisingInstructor);
 	console.log(
 		"assigned && supervisor not null?",
-		project.assigned === 1 && supervisingInstructor !== null
+		project.assigned === 1 && supervisingInstructor != null
 	);
 	console.log("project.assigned?", project.assigned);
 	console.log("supervisor not null", supervisingInstructor != null);

@@ -31,7 +31,7 @@ export default function FilteredList({ filteredList }) {
 					</div>
 				</div>
 			) : (
-				<div className="text-indigo-900 text-md text-center w-auto">
+				<div className="p-3 text-indigo-900 text-md text-center w-auto border border-indigo-300 bg-white rounded-lg  shadow-md">
 					No assignments have been made yet.
 				</div>
 			)}

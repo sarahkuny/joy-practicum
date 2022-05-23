@@ -86,7 +86,7 @@ export default function Projects({
 				setProjects(data);
 			})
 			.catch((error) => console.error(error));
-		// need assignments in dep array to force rerender. not entirely sure but replacing select elements with the names of those selected breaks without it!
+		// need assignments in dep array to force rerender. not entirely sure but replacing select elements with the names of those selected breaks without it and without this second call to projects!
 	}, [setProjects, assignments]);
 
 	return (
