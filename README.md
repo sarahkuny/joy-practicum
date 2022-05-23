@@ -2,14 +2,14 @@
 
 CodeOp full stack MVP - Solo Project. This is a web app that connects small business owners, who want a simple website or feature built, to bootcamp students, who need real world projects in their portfolio.
 
-# Setup Instructions
+## Setup Instructions
 
 Two terminal windows are required:
 
 - Backend: Run `yarn migrate` to create the project tables. Run `yarn` in the project's root folder to install Node dependencies. `yarn start` in the root folder starts the Express server on port 5000.
 - Frontend: `cd client` to navigate to the client folder, then run `yarn` to install React dependencies. `yarn start` starts the client server on port 3000.
 
-# Features
+## Features
 
 This project essentially has two pages:
 
@@ -32,16 +32,16 @@ This project essentially has two pages:
 
   - see a list of all assignments that have been made.
 
-# Technologies
+## Technologies
 
-## Frontend
+### Frontend
 
 - React
 - Tailwind CSS
 - React-icons (Heroicons)
 - classnames package
 
-## Backend
+### Backend
 
 - MySQL Database
 - Node JS
@@ -50,15 +50,15 @@ This project essentially has two pages:
 - Multer (to handle multipart/form-data)
 - Postman
 
-# MySQL Database Schema
+## MySQL Database Schema
 
 ![Practicum Database Schema](/model/practicum%20schema.png)
 
-# React Component Structure
+## React Component Structure
 
 ![Practicum Component Structre](/client/public/files/Practicum%20Component%20Structure.png)
 
-# Feature Extensions
+## Feature Extensions
 
 - secure staff login
 - confirmation on successful addition of new student or instructor, sent message from the Contact Form and uploads from Project Submission Form
