@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 const db = require("../model/helper");
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
+
+router.use(express.json())
 
 //test route
 router.get("/", async (req, res) => {
@@ -37,20 +40,20 @@ router.post("/login", async (req, res) => {
 
     try {
         //select user info from users table
-        const results = await db(`SELECT * FROM users WHERE username = ${username}`);
+        const results = await db(`SELECT * FROM users WHERE username = "${username}";`);
         const user = results.data[0];
 
         //if user exists
         if (user) {
-            const userId = user.id;
             //compare input password with stored hashed password
-            const correctPassword = await bcrypt.compare(password, user.password)
+            const correctPassword = await bcrypt.compare(password, user.password);
             //return error if password incorrect
             if (!correctPassword) return res.status(403).send("password incorrect");
 
             //send back token
-            let token = jwt.sign(username, process.env.ACCESS_TOKEN_SECRET);
-            res.send(`token: ${token}`)
+            
+            var token =  jwt.sign( username, process.env.ACCESS_TOKEN_SECRET);
+            res.send(token)
         } else {
             res.status(400).send("User does not exist")
         }
