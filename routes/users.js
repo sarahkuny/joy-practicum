@@ -5,8 +5,17 @@ const db = require("../model/helper");
 const bcrypt = require('bcrypt')
 
 //test route
-router.get("/", (req, res) => {
-    res.send("route works!")
+router.get("/", async (req, res) => {
+    try {
+        const results = await db(`SELECT * FROM users;`);
+        if (results.data.length){
+            res.status(200).send(results.data)
+        } else {
+            res.status(404).send("No users in database")
+        }
+    } catch (err){
+        res.status(500).send(err)
+    }
 })
 
 //add user
@@ -14,7 +23,8 @@ router.post("/", async (req, res) => {
     const { username, password } = req.body;
     try{
         const hashedPassword = await bcrypt.hash(password, 10);
-        db(`INSERT INTO users (username, password) VALUES (${username}, ${hashedPassword})`)
+        await db(`INSERT INTO users (username, password) VALUES ("${username}", "${hashedPassword}");`);
+        res.status(200).send("User added")
     } catch (err) {
         res.status(500).send(err)
     }
