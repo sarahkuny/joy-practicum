@@ -31,6 +31,13 @@ CREATE TABLE `bootcamp_instructors` (
 	PRIMARY KEY (`instructor_id`)
 );
 
+CREATE TABLE `users` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`username` varchar(40) NOT NULL,
+	`password` varchar(255) NOT NULL,
+	PRIMARY KEY (`id`)
+)
+
 ALTER TABLE `bootcamp_students` ADD CONSTRAINT `bootcamp_students_fk0` FOREIGN KEY (`project_id`) REFERENCES `projects`(`project_id`);
 
 ALTER TABLE `bootcamp_students` ADD CONSTRAINT `bootcamp_students_fk1` FOREIGN KEY (`instructor_id`) REFERENCES `bootcamp_instructors`(`instructor_id`);
