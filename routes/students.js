@@ -28,7 +28,7 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
 	const { first_name, last_name, email } = req.body;
 	console.log(req.body);
-	const sql = `INSERT INTO bootcamp_students (first_name, last_name, email) VALUES ("${first_name}", "${last_name}","${email}");`;
+	const sql = `INSERT INTO bootcamp_students (first_name, last_name, email) VALUES ("${req.body.first_name}", "${last_name}", "${email}");`;
 
 	try {
 		// initially, results is what's returned from the post request.
@@ -50,9 +50,9 @@ router.delete("/:id", async (req, res, next) => {
 	const { id } = req.params;
 	try {
 		let results = await db(
-			`DELETE FROM bootcamp_instructors WHERE student_id=${id};`
+			`DELETE FROM bootcamp_students WHERE student_id=${id};`
 		);
-		results = await db("SELECT * FROM bootcamp_instructors");
+		results = await db("SELECT * FROM bootcamp_students");
 		if (results.data.length) {
 			res.status(200).send(results.data);
 		} else {
