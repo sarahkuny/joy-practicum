@@ -10,6 +10,7 @@ const projectsRouter = require("./routes/projects");
 const studentsRouter = require("./routes/students");
 const instructorsRouter = require("./routes/instructors");
 const contactFormRouter = require("./routes/contact_form");
+const usersRouter = require("./routes/users")
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use("/public/files", express.static("public/files"));
 app.use("/api/projects", projectsRouter);
 app.use("/api/students", studentsRouter);
 app.use("/api/instructors", instructorsRouter);
+app.use("/api/users", usersRouter);
 
 app.use("/", contactFormRouter);
 
