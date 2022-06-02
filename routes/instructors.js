@@ -24,7 +24,7 @@ router.get("/", userShouldBeLoggedIn, async (req, res, next) => {
 });
 
 /* GET  instructor by id */
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", userShouldBeLoggedIn, async (req, res, next) => {
 	const { id } = req.params;
 	try {
 		const results = await db(
@@ -44,7 +44,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // POST: create new instructor
-router.post("/", async (req, res, next) => {
+router.post("/", userShouldBeLoggedIn, async (req, res, next) => {
 	const { first_name, last_name, email } = req.body;
 
 	const sql = `INSERT INTO bootcamp_instructors (first_name, last_name, email) VALUES ("${first_name}", "${last_name}","${email}");`;
