@@ -4,13 +4,13 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../model/helper");
-
+const userShouldBeLoggedIn = require("../guards/guards")
 // ****
 // */api/instructors is added to all routes
 // ****
 
 /* GET all instructors from the instructors table in db. */
-router.get("/", async (req, res, next) => {
+router.get("/", userShouldBeLoggedIn, async (req, res, next) => {
 	try {
 		const results = await db("SELECT * FROM bootcamp_instructors");
 		if (results.data.length) {
