@@ -4,6 +4,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../model/helper");
+const userShouldBeLoggedIn = require("../guards/guards")
 // this package allows us to handle FormData (different content type) - both text and files
 const multer = require("multer");
 
@@ -28,7 +29,7 @@ const upload = multer({ storage: storage });
 // ****
 
 /* GET all projects from the projects table in db. */
-router.get("/", async (req, res, next) => {
+router.get("/", userShouldBeLoggedIn, async (req, res, next) => {
 	try {
 		const results = await db("SELECT * FROM projects");
 		if (results.data.length) {
@@ -42,7 +43,7 @@ router.get("/", async (req, res, next) => {
 });
 
 /* GET  project by id */
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", userShouldBeLoggedIn, async (req, res, next) => {
 	const { id } = req.params;
 	try {
 		const results = await db(`SELECT * FROM projects WHERE project_id=${id}`);
@@ -92,7 +93,7 @@ router.post("/", upload.single("project_files"), async (req, res, next) => {
 });
 
 // PUT: update accepted
-router.put("/:id/accepted", async (req, res, next) => {
+router.put("/:id/accepted", userShouldBeLoggedIn, async (req, res, next) => {
 	const { id } = req.params;
 	const { accepted } = req.body;
 	console.log(accepted);
@@ -123,7 +124,7 @@ router.put("/:id/accepted", async (req, res, next) => {
 });
 
 // PUT: update completed
-router.put("/:id/completed", async (req, res, next) => {
+router.put("/:id/completed", userShouldBeLoggedIn, async (req, res, next) => {
 	const { id } = req.params;
 	const { completed } = req.body;
 
@@ -152,7 +153,7 @@ router.put("/:id/completed", async (req, res, next) => {
 });
 
 // PUT: update assigned
-router.put("/:id/assigned", async (req, res, next) => {
+router.put("/:id/assigned", userShouldBeLoggedIn, async (req, res, next) => {
 	const { id } = req.params;
 	const { assigned } = req.body;
 
