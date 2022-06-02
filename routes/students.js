@@ -4,13 +4,13 @@
 var express = require("express");
 var router = express.Router();
 const db = require("../model/helper");
-
+const userShouldBeLoggedIn = require("../guards/guards")
 // ****
 // */api/students is added to all routes
 // ****
 
 /* GET all students from the students table in db. */
-router.get("/", async (req, res, next) => {
+router.get("/", userShouldBeLoggedIn, async (req, res, next) => {
 	try {
 		const results = await db("SELECT * FROM bootcamp_students");
 		// if the results array comes back not empty, then send the data. otherwise send the not found error. all other errors will be caught in .catch
@@ -25,7 +25,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // POST: create new student
-router.post("/", async (req, res, next) => {
+router.post("/", userShouldBeLoggedIn, async (req, res, next) => {
 	const { first_name, last_name, email } = req.body;
 	console.log(req.body);
 	const sql = `INSERT INTO bootcamp_students (first_name, last_name, email) VALUES ("${req.body.first_name}", "${last_name}", "${email}");`;
@@ -64,7 +64,7 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 // PUT: edit student
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", userShouldBeLoggedIn, async (req, res, next) => {
 	const { id } = req.params;
 	const { project_id, instructor_id } = req.body;
 	console.log(req.body);
@@ -96,7 +96,7 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // need to use join because I want to access the names of the instructors not just their id
-router.get("/filter", async (req, res, next) => {
+router.get("/filter", userShouldBeLoggedIn, async (req, res, next) => {
 	const { instructor_id } = req.params;
 
 	const sql = `SELECT bootcamp_students.student_id, bootcamp_students.first_name, bootcamp_students.last_name,  bootcamp_students.project_id, CONCAT(bootcamp_instructors.first_name," ", bootcamp_instructors.last_name) AS instructor_name FROM bootcamp_students INNER JOIN bootcamp_instructors	ON bootcamp_students.instructor_id=bootcamp_instructors.instructor_id order by instructor_name;
