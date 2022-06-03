@@ -25,9 +25,16 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     const { username, password } = req.body;
     try{
-        const hashedPassword = await bcrypt.hash(password, 10);
-        await db(`INSERT INTO users (username, password) VALUES ("${username}", "${hashedPassword}");`);
-        res.status(200).send("User added")
+        let { data } = await db(`SELECT username FROM users`);
+        let userExists = data.find((user) => (user.username === username))
+        if(userExists) {
+            res.sendStatus(401);
+        }
+        if(userExists === undefined) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await db(`INSERT INTO users (username, password) VALUES ("${username}", "${hashedPassword}");`);
+            res.status(200).send("User added")        
+        }
     } catch (err) {
         res.status(500).send(err)
     }
