@@ -1,23 +1,38 @@
 import React from "react";
+import axios from "axios";
 
 export default function Checkboxes({ setProjects, project }) {
-	const handleChange = (event) => {
+	const handleChange = async (event) => {
 		const route = event.target.value;
-
-		fetch(`/api/projects/${project.project_id}/${route}`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			// [route]-using variable as key
-			body: JSON.stringify({ [route]: "true" }),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				setProjects(data);
-			})
-			.catch((error) => console.error(error));
+		let token = localStorage.getItem("token");
+		try{
+			const { data } = await axios(`/api/projects/${project.project_id}/${route}}`, {
+				method: "PUT",
+				headers: {
+					authorization: `Bearer ${token}`
+				},
+				body: { [route]: true }
+			});
+			setProjects(data);
+		} 
+		catch (err) {
+			console.log(err)
+		}		
 	};
+
+	// fetch(`/api/projects/${project.project_id}/${route}`, {
+	// 	method: "PUT",
+	// 	headers: {
+	// 		"Content-Type": "application/json",
+	// 	},
+	// 	// [route]-using variable as key
+	// 	body: JSON.stringify({ [route]: "true" }),
+	// })
+	// 	.then((response) => response.json())
+	// 	.then((data) => {
+	// 		setProjects(data);
+	// 	})
+	// 	.catch((error) => console.error(error));
 
 	return (
 		<div className="flex gap-3">
