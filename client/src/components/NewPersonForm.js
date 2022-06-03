@@ -29,6 +29,7 @@ export default function NewPersonForm({ stateSetter, route }) {
 				headers: {
 					authorization: `Bearer ${token}`
 				},
+				data: details
 			});
 			const setState = stateSetter;
 			setState(data);
