@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProjectsForm from "./components/ProjectForm";
 import ContactForm from "./components/ContactForm";
+import axios from "axios";
 
 import Header from "./components/Header";
 import StaffView from "./components/StaffView";
@@ -13,36 +14,73 @@ function App() {
 	const [filteredList, setFilteredList] = useState([]);
 	const [showStaffView, setShowStaffView] = useState(false);
 
-	useEffect(() => {
-		fetch("/api/projects/")
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
+	useEffect( () => {
+		const fetchProjects = async (token) => {
+			try {
+				const { data } = await axios("/api/projects", {
+					headers: {
+						authorization: `Bearer ${token}`
+					},
+				});
+				setProjects(data)
+			}
+			catch(err) {
+				console.error(err)
+			}
+		};
+		const fetchFilteredList = async (token) => {
+			try {
+				const { data } = await axios("/api/students/filter", {
+					headers: {
+						authorization: `Bearer ${token}`
+					},
+				});
+				setFilteredList(data)
+			}
+			catch(err) {
+				console.error(err)
+			}
+		}
 
-				setProjects(data);
-			})
-			.catch((error) => console.error(error));
-
-		fetch("/api/students/filter")
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
-				setFilteredList(data);
-			})
-			.catch((error) => console.error(error));
-	}, []);
+		let token = localStorage.getItem("token");
+		fetchProjects(token);
+		fetchFilteredList(token);
+	},[]);
+		
+			 
 
 	// gets joined table that represents foreign keys in students table
-	const getFilteredList = () => {
-		fetch("/api/students/filter")
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
-				setFilteredList(data);
-			})
-			.catch((error) => console.error(error));
-		console.log("done fetching filtered");
-	};
+	// const getFilteredList = () => {
+	// 	fetch("/api/students/filter",
+	// 	{
+	// 		headers: {
+	// 			authorization: "Bearer" + localStorage.getItem("token")
+	// 		}
+	// 	}
+	// 	)
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// 			console.log(data);
+	// 			setFilteredList(data);
+	// 		})
+	// 		.catch((error) => console.error(error));
+	// 	console.log("done fetching filtered");
+	// };
+
+	const getFilteredList = async () => {
+		let token = localStorage.getItem("token");
+		try {
+			const { data } = await axios("/api/students/filter", {
+				headers: {
+					authorization: `Bearer ${token}`
+				},
+			});
+			setFilteredList(data)
+		}
+		catch(err) {
+			console.error(err)
+		}
+	}
 
 	return (
 		<div className="App ">
