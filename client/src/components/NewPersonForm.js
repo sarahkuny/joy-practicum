@@ -24,7 +24,7 @@ export default function NewPersonForm({ stateSetter, route }) {
 		event.preventDefault();
 		let token = localStorage.getItem("token");
 		try {
-			const { data } = await axios("/api/${route}", {
+			const { data } = await axios(`/api/${route}`, {
 				method: "POST",
 				headers: {
 					authorization: `Bearer ${token}`
