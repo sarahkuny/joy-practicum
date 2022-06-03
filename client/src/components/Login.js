@@ -7,11 +7,13 @@ export default function Login(){
     const [credentials, setCredentials] = useState({ username: "", password: "" }); 
     const [successOpen, setSuccessOpen] = useState(false);
     const [failOpen, setFailOpen] = useState(false);
+    const [failLogin, setFailLogin] = useState(false);
 
 
     const closeModal = () => {
         setSuccessOpen(false);
         setFailOpen(false);
+        setFailLogin(false);
     }
 
 
@@ -24,7 +26,7 @@ export default function Login(){
             });
             localStorage.setItem("token", data);
         } catch (err){
-            console.log(err)
+            setFailLogin(true)
         }
         setCredentials({username: "", password: ""})
     }
@@ -72,6 +74,14 @@ export default function Login(){
                     &times;
                 </a>
                 User already exists. Please log in or select a different username.
+                </div>
+            </Popup>
+            <Popup open={failLogin} closeOnDocumentClick onClose={closeModal}>
+                <div className="bg-orange-50 text-red-700 text-2xl text-center pb-20 flex flex-col">
+                <a className="px-2 text-neutral-900 text-right mb-10 hover:bg-red-100 max-w-fit  " onClick={closeModal}>
+                    &times;
+                </a>
+                Login failed. Username or password incorrect.
                 </div>
             </Popup>
             <div className="flex-col justify-center items-center">
