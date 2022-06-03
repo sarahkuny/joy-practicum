@@ -6,12 +6,12 @@ export default function Checkboxes({ setProjects, project }) {
 		const route = event.target.value;
 		let token = localStorage.getItem("token");
 		try{
-			const { data } = await axios(`/api/projects/${project.project_id}/${route}}`, {
+			const { data } = await axios(`/api/projects/${project.project_id}/${route}`, {
 				method: "PUT",
 				headers: {
 					authorization: `Bearer ${token}`
 				},
-				body: { [route]: true }
+				data: { [route]: "true" }
 			});
 			setProjects(data);
 		} 
