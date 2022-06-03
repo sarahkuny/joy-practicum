@@ -3,7 +3,7 @@ import axios from "axios";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
-export default function Login(){
+export default function Login(props){
     const [credentials, setCredentials] = useState({ username: "", password: "" }); 
     const [successOpen, setSuccessOpen] = useState(false);
     const [failOpen, setFailOpen] = useState(false);
@@ -25,6 +25,8 @@ export default function Login(){
                 data: credentials
             });
             localStorage.setItem("token", data);
+            props.login();
+            
         } catch (err){
             setFailLogin(true)
         }

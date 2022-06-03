@@ -83,14 +83,19 @@ function App() {
 		}
 	}
 
+	const changeToStaffView = () => {
+		setShowLoginView(false);
+		setShowStaffView(true);
+	}
+
 	return (
 		<div className="App ">			
 			<Header
 				showLoginView={showLoginView}
 				setShowLoginView={setShowLoginView}
 			/>
-			{!showLoginView && <Hero />}
-			{!showLoginView && (
+			{!showLoginView && !showStaffView && <Hero />}
+			{!showLoginView && !showStaffView && (
 				<div className="flex gap-2 flex-col md:flex-row">
 					<ContactForm />
 					<ProjectsForm
@@ -101,7 +106,7 @@ function App() {
 					/>
 				</div>
 			)}
-			{showLoginView && ( <Login />)}
+			{showLoginView && ( <Login login={changeToStaffView}/>)}
 			{showStaffView && (
 				<StaffView
 					projects={projects}
