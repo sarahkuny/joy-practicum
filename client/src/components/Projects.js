@@ -5,6 +5,7 @@ import classnames from "classnames";
 import Checkboxes from "./Checkboxes";
 import { HiOutlinePhone } from "react-icons/hi";
 import { HiOutlineMail } from "react-icons/hi";
+import axios from "axios";
 
 export default function Projects({
 	students,
@@ -37,59 +38,110 @@ export default function Projects({
 		setAssignments({ project_id, instructor_id });
 	};
 
-	const handleAssignments = () => {
-		// state value of the selected student. the body is the object that put is expecting stored in state
-		fetch(`/api/students/${selectedStudent.student_id}`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(assignments),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
-				// this causes the select element to reset back to "select student" since state updates. functionality to replace select elements with the names of those selected doesn't work without setStudents here.
-				setStudents(data);
-			})
-			.catch((error) => console.error(error));
-
-		// after assignments have been made, reset assignments object
+	const handleAssignments = async () => {
+		let token = localStorage.getItem("token");
+		try {
+			const { data } = await axios(`/api/students/${selectedStudent.student_id}`, {
+				method: "PUT",
+				headers: {
+					authorization: `Bearer ${token}`
+				},
+				body: assignments
+			});
+			setStudents(data);
+		}
+		catch(err) {
+			console.error(err)
+		}
 		setAssignments({ project_id: null, instructor_id: null });
+
+		// // state value of the selected student. the body is the object that put is expecting stored in state
+		// fetch(`/api/students/${selectedStudent.student_id}`, {
+		// 	method: "PUT",
+		// 	headers: {
+		// 		"Content-Type": "application/json",
+		// 	},
+		// 	body: JSON.stringify(assignments),
+		// })
+		// 	.then((response) => response.json())
+		// 	.then((data) => {
+		// 		console.log(data);
+		// 		// this causes the select element to reset back to "select student" since state updates. functionality to replace select elements with the names of those selected doesn't work without setStudents here.
+		// 		setStudents(data);
+		// 	})
+		// 	.catch((error) => console.error(error));
+
+		// // after assignments have been made, reset assignments object
+		// setAssignments({ project_id: null, instructor_id: null });
 	};
 
-	const updateAssignedProperty = (project_id) => {
-		fetch(`/api/projects/${project_id}/assigned`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ assigned: "true" }),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				console.log("projects is being set now", data);
-				setProjects(data);
-			})
-			.catch((error) => console.error(error));
+	const updateAssignedProperty = async (project_id) => {
+		let token = localStorage.getItem("token");
+		try {
+			const { data } = await axios(`/api/projects/${project_id}/assigned`, {
+				method: "PUT",
+				headers: {
+					authorization: `Bearer ${token}`
+				},
+				body: { assigned: true }
+			});
+			setProjects(data);
+		}
+		catch(err) {
+			console.error(err)
+		}
 	};
+
+
+	// fetch(`/api/projects/${project_id}/assigned`, {
+	// 	method: "PUT",
+	// 	headers: {
+	// 		"Content-Type": "application/json",
+	// 	},
+	// 	body: JSON.stringify({ assigned: "true" }),
+	// })
+	// 	.then((response) => response.json())
+	// 	.then((data) => {
+	// 		console.log("projects is being set now", data);
+	// 		setProjects(data);
+	// 	})
+	// 	.catch((error) => console.error(error));
+
 
 	useEffect(() => {
-		console.log("second fetch to projects starting");
-		fetch("/api/projects/")
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				// doesn't seem to be called
-				console.log("projects is being set again");
+		const fetchProjects = async (token) => {
+			try {
+				const { data } = await axios(`/api/projects/`, {
+					headers: {
+						authorization: `Bearer ${token}`
+					}
+				});
 				setProjects(data);
-			})
-			.catch((error) => console.error(error));
-		// need assignments in dep array to force rerender. not entirely sure but replacing select elements with the names of those selected breaks without it and without this second call to projects!
+			}
+			catch(err) {
+				console.error(err)
+			}
+		}
+		let token = localStorage.getItem("token");
+		fetchProjects(token);
 	}, [setProjects, assignments]);
 
-	return (
+
+	// console.log("second fetch to projects starting");
+	// 	fetch("/api/projects/")
+	// 		.then((response) => {
+	// 			return response.json();
+	// 		})
+	// 		.then((data) => {
+	// 			// doesn't seem to be called
+	// 			console.log("projects is being set again");
+	// 			setProjects(data);
+	// 		})
+	// 		.catch((error) => console.error(error));
+		// need assignments in dep array to force rerender. not entirely sure but replacing select elements with the names of those selected breaks without it and without this second call to projects!
+
+
+		return (
 		<div className="grid sm:grid-cols-2 lg:grid-cols-3  gap-4 text-indigo-900 p-6">
 			{/* I'd like the most recently added projects to appear first. To do that, I made a shallow copy of the state projects array, reversed the order of elements, then did the map on that. */}
 			{[...projects].reverse().map((project, index) => {
