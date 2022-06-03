@@ -13,6 +13,7 @@ function App() {
 	const [projects, setProjects] = useState([]);
 	const [filteredList, setFilteredList] = useState([]);
 	const [showStaffView, setShowStaffView] = useState(false);
+	const [showLoginView, setShowLoginView] = useState(false);
 
 	useEffect( () => {
 		const fetchProjects = async (token) => {
@@ -83,15 +84,13 @@ function App() {
 	}
 
 	return (
-		<div className="App ">
-			<Login />
-			
+		<div className="App ">			
 			<Header
-				showStaffView={showStaffView}
-				setShowStaffView={setShowStaffView}
+				showLoginView={showLoginView}
+				setShowLoginView={setShowLoginView}
 			/>
-			{!showStaffView && <Hero />}
-			{!showStaffView && (
+			{!showLoginView && <Hero />}
+			{!showLoginView && (
 				<div className="flex gap-2 flex-col md:flex-row">
 					<ContactForm />
 					<ProjectsForm
@@ -102,6 +101,7 @@ function App() {
 					/>
 				</div>
 			)}
+			{showLoginView && ( <Login />)}
 			{showStaffView && (
 				<StaffView
 					projects={projects}
