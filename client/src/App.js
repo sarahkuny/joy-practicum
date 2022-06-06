@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ProjectsForm from "./components/ProjectForm";
 import ContactForm from "./components/ContactForm";
 import axios from "axios";
-
+import HeaderLoggedIn from "./components/HeaderLoggedIn";
 import Header from "./components/Header";
 import StaffView from "./components/StaffView";
 import Hero from "./components/Hero";
@@ -88,12 +88,18 @@ function App() {
 		setShowStaffView(true);
 	}
 
+	const logout = () => {
+		localStorage.removeItem("token");
+		setShowStaffView(!showStaffView)
+	}
+
 	return (
 		<div className="App ">			
-			<Header
+			{showStaffView ? <HeaderLoggedIn logout={logout} /> : <Header
 				showLoginView={showLoginView}
 				setShowLoginView={setShowLoginView}
-			/>
+			/>}
+			
 			{!showLoginView && !showStaffView && <Hero />}
 			{!showLoginView && !showStaffView && (
 				<div className="flex gap-2 flex-col md:flex-row">
