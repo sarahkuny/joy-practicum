@@ -5,7 +5,18 @@ CodeOp full stack MVP - Solo Project. This is a web app that connects small busi
 ## Setup Instructions
 
 Two terminal windows are required:
+- Install dependencies: 
 
+backend:
+```
+npm i bcrypt
+npm i jsonwebtoken
+```
+frontend:
+```
+npm i axios
+npm i reactjs-popup --save
+```
 - Backend: Run `yarn migrate` to create the project tables. Run `yarn` in the project's root folder to install Node dependencies. `yarn start` in the root folder starts the Express server on port 5000.
 - Frontend: `cd client` to navigate to the client folder, then run `yarn` to install React dependencies. `yarn start` starts the client server on port 3000.
 
