@@ -8,18 +8,18 @@ const jwt = require('jsonwebtoken');
 router.use(express.json())
 
 //test route
-router.get("/", async (req, res) => {
-    try {
-        const results = await db(`SELECT * FROM users;`);
-        if (results.data.length){
-            res.status(200).send(results.data)
-        } else {
-            res.status(404).send("No users in database")
-        }
-    } catch (err){
-        res.status(500).send(err)
-    }
-})
+// router.get("/", async (req, res) => {
+//     try {
+//         const results = await db(`SELECT * FROM users;`);
+//         if (results.data.length){
+//             res.status(200).send(results.data)
+//         } else {
+//             res.status(404).send("No users in database")
+//         }
+//     } catch (err){
+//         res.status(500).send(err)
+//     }
+// })
 
 //add user
 router.post("/", async (req, res) => {
@@ -55,14 +55,14 @@ router.post("/login", async (req, res) => {
             //compare input password with stored hashed password
             const correctPassword = await bcrypt.compare(password, user.password);
             //return error if password incorrect
-            if (!correctPassword) return res.status(403).send("password incorrect");
+            if (!correctPassword) return res.sendStatus(401);
 
             //send back token
             
             var token =  jwt.sign( username, process.env.ACCESS_TOKEN_SECRET);
             res.send(token)
         } else {
-            res.status(400).send("User does not exist")
+            res.sendStatus(401);
         }
     } catch (err) {
         res.status(400).send(err)
