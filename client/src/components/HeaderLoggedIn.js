@@ -1,5 +1,4 @@
 import React from "react";
-import { HiLogout } from "react-icons/hi";
 
 export default function HeaderLoggedIn({ logout }) {
 	return (
